@@ -9,13 +9,13 @@ void main(int argc, char **argv)
 	{
 		//error
 	}
-	DWORDLONG SpaceNeeded = 300;
+	DWORDLONG SpaceNeeded = 3000000000;
 	if (!CheckStorage(SpaceNeeded))
 	{
 		//error
 	}
-	DWORDLONG RAMNeeded = 300;
-	DWORDLONG VRAMNeeded = 300;
+	DWORDLONG RAMNeeded = 3000000000;
+	DWORDLONG VRAMNeeded = 3000000000;
 	if (!CheckMemory(RAMNeeded, VRAMNeeded))
 	{
 		//error

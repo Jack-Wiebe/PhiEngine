@@ -50,7 +50,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 	MEMORYSTATUSEX status;
 	GlobalMemoryStatusEx(&status);
 
-	cout << status.ullTotalPhys << " bits of Physical Memory availible for the " << physicalRAMNeeded << " bits needed" << endl;
+	cout << status.ullTotalPhys << " bytes of Physical Memory availible for the " << physicalRAMNeeded << " bytes needed" << endl;
 
 	if (status.ullTotalPhys <= physicalRAMNeeded)
 	{  /* you don’t have enough physical memory. Tell the player to go get a real computer and give this one to his mother. */
@@ -60,7 +60,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 		return false;
 	}
 
-	cout << status.ullAvailVirtual << " bits of Virtual Memory availible for the " << virtualRAMNeeded << " bits needed" << endl;
+	cout << status.ullAvailVirtual << " bytes of Virtual Memory availible for the " << virtualRAMNeeded << " bytes needed" << endl;
 
 	// Check for enough free memory.
 	if (status.ullAvailVirtual <= virtualRAMNeeded)
