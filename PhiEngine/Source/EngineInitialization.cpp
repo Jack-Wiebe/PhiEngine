@@ -48,7 +48,9 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded)
 bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
 {
 	MEMORYSTATUSEX status;
+	status.dwLength = sizeof(status);
 	GlobalMemoryStatusEx(&status);
+	
 
 	cout << status.ullTotalPhys << " bytes of Physical Memory availible for the " << physicalRAMNeeded << " bytes needed" << endl;
 
@@ -109,13 +111,13 @@ DWORD ReadCPUSpeed()
 			cout << dwMHz << "MHz cpu speed" << endl;
 		}
 
-		long aError = RegQueryValueEx(hKey, "ProcessorNameString", NULL, &strType, reinterpret_cast<BYTE *>(architecture.GetBuffer(MAX_PATH)), &BufSize);
+		long aError = RegQueryValueEx(hKey, "ProcessorNameString", NULL, &strType, (LPBYTE)(architecture.GetBuffer(MAX_PATH)), &BufSize);
 
 		if (aError != ERROR_SUCCESS)
 		{
 			while (aError == ERROR_MORE_DATA) {
 				BufSize++;
-				aError = RegQueryValueEx(hKey, "ProcessorNameString", NULL, &strType, reinterpret_cast<BYTE *>(architecture.GetBuffer(MAX_PATH)), &BufSize);
+				aError = RegQueryValueEx(hKey, "ProcessorNameString", NULL, &strType, (LPBYTE)(architecture.GetBuffer(MAX_PATH)), &BufSize);
 			}
 			//cout << "Error reading from register" << endl;
 			//cout << "Error Code: " << aError << endl;
