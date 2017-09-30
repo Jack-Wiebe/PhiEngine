@@ -140,10 +140,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Character\ActorComponent.cpp" />
+    <ClCompile Include="..\Source\Character\SpecialAbilityComponent.cpp" />
     <ClCompile Include="..\Source\EngineInitialization.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\Character\AbilityInterface.h" />
+    <ClInclude Include="..\Source\Character\ActorComponent.h" />
+    <ClInclude Include="..\Source\Character\ComponentId.h" />
+    <ClInclude Include="..\Source\Character\SpecialAbilityComponent.h" />
     <ClInclude Include="..\Source\EngineInitialization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
