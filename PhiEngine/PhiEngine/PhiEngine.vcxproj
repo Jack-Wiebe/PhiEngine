@@ -144,6 +144,11 @@
     <ClCompile Include="..\Source\Character\SpecialAbilityComponent.cpp" />
     <ClCompile Include="..\Source\EngineInitialization.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Character\AbilityInterface.h" />
@@ -151,6 +156,11 @@
     <ClInclude Include="..\Source\Character\ComponentId.h" />
     <ClInclude Include="..\Source\Character\SpecialAbilityComponent.h" />
     <ClInclude Include="..\Source\EngineInitialization.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Factory.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
