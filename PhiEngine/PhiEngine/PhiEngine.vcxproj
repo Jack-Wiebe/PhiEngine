@@ -145,10 +145,22 @@
     <ClCompile Include="..\Source\EngineInitialization.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="ActorFactory.cpp" />
+    <ClCompile Include="AICompInterface.cpp" />
+    <ClCompile Include="AttributeCompInterface.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
+    <ClCompile Include="ComponentInterface.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="PhysicsCompInterface.cpp" />
+    <ClCompile Include="PickupCompInterface.cpp" />
+    <ClCompile Include="RenderingCompInterface.cpp" />
+    <ClCompile Include="ResourceHandler.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Character\AbilityInterface.h" />
@@ -157,10 +169,22 @@
     <ClInclude Include="..\Source\Character\SpecialAbilityComponent.h" />
     <ClInclude Include="..\Source\EngineInitialization.h" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ActorFactory.h" />
+    <ClInclude Include="AICompInterface.h" />
+    <ClInclude Include="AttributeCompInterface.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="ComponentInterface.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameData.h" />
+    <ClInclude Include="PhysicsCompInterface.h" />
+    <ClInclude Include="PickupCompInterface.h" />
+    <ClInclude Include="RenderingCompInterface.h" />
+    <ClInclude Include="ResourceHandler.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="WorldRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
