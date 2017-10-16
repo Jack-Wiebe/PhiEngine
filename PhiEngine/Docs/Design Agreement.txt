@@ -1,0 +1,40 @@
+Coding Styles:
+
+memeber variable naming:
+m_variableName;
+
+global variable nameing:
+g_globalVariableName
+
+function names:
+MyFunctionName()
+
+Braces:
+if(true)
+{
+	//do something 
+}
+else
+{
+	//do other
+}
+
+Project Structure:
+
+Assets - where are art, audio and video assets go
+Docs - where all design related documentation goes
+Game - where the app gets built to
+Lib - any external DLLs
+Source - source code for the engine
+Temp - where temp files are build associted to building
+
+Minimum Requirments:
+
+RAM: 2GB
+VRAM: 512MB
+OS: WIN 7
+DX: DX 9
+HDD Space: 10GB
+AMD Graphics: Athlon 64 X2 Dual Core 6000+
+Nvidia Graphics: GeForce 9600 GT 512MB
+CPU:Core 2 Duo E8400 3.0GHz
