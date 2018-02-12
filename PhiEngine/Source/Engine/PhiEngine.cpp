@@ -1,8 +1,11 @@
-#include "EngineInitialization.h"
+#include "PhiEngine.h"
+#include "SplashScreen.h"
 
 using namespace std;
+PhiEngine::GameState PhiEngine::_gameState;
+sf::RenderWindow PhiEngine::_mainWindow;
 
-bool IsOnlyInstance(LPCTSTR gameTitle)
+bool PhiEngine::IsOnlyInstance(LPCTSTR gameTitle)
 {
 	HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
 	if (GetLastError() != ERROR_SUCCESS)
@@ -23,7 +26,7 @@ bool IsOnlyInstance(LPCTSTR gameTitle)
 	return true;
 }
 
-bool CheckStorage(const DWORDLONG diskSpaceNeeded)
+bool PhiEngine::CheckStorage(const DWORDLONG diskSpaceNeeded)
 {
 
 	LPCTSTR lpDirectoryName = NULL;
@@ -45,7 +48,7 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded)
 
 }
 
-bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
+bool PhiEngine::CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNeeded)
 {
 	MEMORYSTATUSEX status;
 	status.dwLength = sizeof(status);
@@ -87,9 +90,7 @@ bool CheckMemory(const DWORDLONG physicalRAMNeeded, const DWORDLONG virtualRAMNe
 	return true;
 }
 
-
-
-DWORD ReadCPUSpeed()
+DWORD PhiEngine::ReadCPUSpeed()
 {
 	DWORD BufSize = sizeof(DWORD);
 	DWORD dwMHz = 0;
@@ -105,6 +106,7 @@ DWORD ReadCPUSpeed()
 		if (RegQueryValueEx(hKey, "~MHz", NULL, &type, (LPBYTE)&dwMHz, &BufSize) != ERROR_SUCCESS)
 		{
 			cout << "Could not read CPU clock speed" << endl;
+			return -1;
 		}
 		else
 		{
@@ -132,4 +134,91 @@ DWORD ReadCPUSpeed()
 	}
 
 	return dwMHz;
+}
+
+bool PhiEngine::Initialize()
+{
+	_gameState = Uninitialized;
+
+	LPCTSTR Title = "PhiEngine";
+	if (!IsOnlyInstance(Title))
+	{
+		//error
+		return false;
+	}
+	DWORDLONG SpaceNeeded = 300000000;
+	if (!CheckStorage(SpaceNeeded))
+	{
+		//error
+		return false;
+	}
+	DWORDLONG RAMNeeded = 300000000;
+	DWORDLONG VRAMNeeded = 300000000;
+	if (!CheckMemory(RAMNeeded, VRAMNeeded))
+	{
+		//error
+		return false;
+	}
+
+	DWORD Success = ReadCPUSpeed();
+	if (Success < 0)
+		return false;
+
+
+
+	if (_gameState != Uninitialized)
+		return false;
+
+	_mainWindow.create({ 1024,769 }, "PhiEngine");
+	_gameState = Playing;
+
+	return true;
+}
+
+void PhiEngine::Start()
+{
+
+	while (!IsExiting())
+	{
+		GameLoop();
+	}
+
+	_mainWindow.close();
+}
+
+bool PhiEngine::IsExiting()
+{
+	sf::Event m_event;
+	//return false;
+	while (_mainWindow.pollEvent(m_event)) {
+		if (m_event.type == sf::Event::Closed)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void PhiEngine::GameLoop()
+{	
+	while (_gameState == SplashScreen)
+	{
+
+		//SplashScreen::draw();
+
+		sf::Event m_event;
+		while (_mainWindow.pollEvent(m_event))
+		{
+			if (m_event.type == sf::Event::KeyPressed
+				|| m_event.type == sf::Event::MouseButtonPressed)
+			{
+				_gameState = Menu;
+				break;
+			}
+		}
+	}
+
+
+	_mainWindow.clear();
+	_mainWindow.display();
 }

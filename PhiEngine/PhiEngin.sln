@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhiEngine", "PhiEngine\PhiEngine.vcxproj", "{4A0F7574-E35C-403D-A4C5-11994F5F5353}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhiEngine", "Source\PhiEngine.vcxproj", "{4A0F7574-E35C-403D-A4C5-11994F5F5353}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {479FE66F-8CBD-407F-940C-03A27B4D5F22}
+		SolutionGuid = {4AAD5D14-D96F-4031-B1AD-1554B5BB1CAF}
 	EndGlobalSection
 EndGlobal

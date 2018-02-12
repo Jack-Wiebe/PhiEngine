@@ -70,19 +70,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\Game\</OutDir>
+    <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\Game\</OutDir>
+    <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\Game\</OutDir>
+    <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\Game\</OutDir>
+    <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -90,12 +90,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <Link>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,12 +125,17 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,61 +145,27 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Character\ActorComponent.cpp" />
-    <ClCompile Include="..\Source\Character\SpecialAbilityComponent.cpp" />
-    <ClCompile Include="..\Source\EngineInitialization.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="ActorFactory.cpp" />
-    <ClCompile Include="AICompInterface.cpp" />
-    <ClCompile Include="AttributeCompInterface.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="ComponentFactory.cpp" />
-    <ClCompile Include="ComponentInterface.cpp" />
-    <ClCompile Include="Factory.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameData.cpp" />
-    <ClCompile Include="PhysicsCompInterface.cpp" />
-    <ClCompile Include="PickupCompInterface.cpp" />
-    <ClCompile Include="RenderingCompInterface.cpp" />
-    <ClCompile Include="ResourceHandler.cpp" />
-    <ClCompile Include="TESTSFML_LIBS.cpp" />
-    <ClCompile Include="World.cpp" />
-    <ClCompile Include="WorldRenderer.cpp" />
+    <ClCompile Include="Engine\PhiEngine.cpp" />
+    <ClCompile Include="Engine\SplashScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Character\AbilityInterface.h" />
-    <ClInclude Include="..\Source\Character\ActorComponent.h" />
-    <ClInclude Include="..\Source\Character\ComponentId.h" />
-    <ClInclude Include="..\Source\Character\SpecialAbilityComponent.h" />
-    <ClInclude Include="..\Source\EngineInitialization.h" />
-    <ClInclude Include="Actor.h" />
-    <ClInclude Include="ActorFactory.h" />
-    <ClInclude Include="AICompInterface.h" />
-    <ClInclude Include="AttributeCompInterface.h" />
-    <ClInclude Include="AudioManager.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="ComponentFactory.h" />
-    <ClInclude Include="ComponentInterface.h" />
-    <ClInclude Include="Factory.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameData.h" />
-    <ClInclude Include="PhysicsCompInterface.h" />
-    <ClInclude Include="PickupCompInterface.h" />
-    <ClInclude Include="RenderingCompInterface.h" />
-    <ClInclude Include="ResourceHandler.h" />
-    <ClInclude Include="World.h" />
-    <ClInclude Include="WorldRenderer.h" />
+    <ClInclude Include="Engine\PhiEngine.h" />
+    <ClInclude Include="Engine\SplashScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
