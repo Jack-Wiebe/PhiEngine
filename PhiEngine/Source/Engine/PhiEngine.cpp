@@ -1,8 +1,8 @@
 #include "PhiEngine.h"
-#include "SplashScreen.h"
 
 using namespace std;
 PhiEngine::GameState PhiEngine::_gameState;
+PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
 
 bool PhiEngine::IsOnlyInstance(LPCTSTR gameTitle)
@@ -169,7 +169,18 @@ bool PhiEngine::Initialize()
 	if (_gameState != Uninitialized)
 		return false;
 
+	//inti Audio
+	sf::SoundBuffer buffer = sf::SoundBuffer();
+	std::vector<std::string> files = std::vector<std::string>();
+	std::string music = "";
+	_audioManager.Initialize(buffer, files, music);
+
+	//init Graphics
 	_mainWindow.create({ 1024,769 }, "PhiEngine");
+	if (!_mainWindow.isOpen())
+		return false;
+
+	
 	_gameState = Playing;
 
 	return true;
@@ -204,7 +215,7 @@ void PhiEngine::GameLoop()
 	while (_gameState == SplashScreen)
 	{
 
-		//SplashScreen::draw();
+		SplashScreen::draw(_mainWindow);
 
 		sf::Event m_event;
 		while (_mainWindow.pollEvent(m_event))
