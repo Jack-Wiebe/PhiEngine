@@ -3,12 +3,11 @@
 class BaseComponent
 {
 public:
-	virtual void Awake() {};
-	virtual void Start() {};
-	virtual void Update() {};
-	virtual void Late() {};
-	virtual void SendMessage(BaseMessage* message) {};
-	BaseComponent();
-	~BaseComponent();
+	virtual void Awake() {}
+	virtual void Start() {}
+	virtual void Update() {}
+	virtual void Late() {}
+	virtual bool SendMessage(BaseMessage* msg) { return false; }
+
 };
 
