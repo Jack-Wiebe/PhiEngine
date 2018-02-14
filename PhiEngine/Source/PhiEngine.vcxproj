@@ -160,12 +160,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\main.cpp" />
+    <ClCompile Include="Component\BaseComponent.cpp" />
+    <ClCompile Include="Engine\BaseMessage.cpp" />
     <ClCompile Include="Engine\PhiEngine.cpp" />
     <ClCompile Include="Engine\SplashScreen.cpp" />
+    <ClCompile Include="Engine\PhiEngineAudio.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Component\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Component\BaseComponent.h" />
+    <ClInclude Include="Engine\BaseMessage.h" />
     <ClInclude Include="Engine\PhiEngine.h" />
     <ClInclude Include="Engine\SplashScreen.h" />
+    <ClInclude Include="Engine\PhiEngineAudio.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Component\TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

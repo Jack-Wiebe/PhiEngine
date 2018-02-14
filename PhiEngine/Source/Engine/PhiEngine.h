@@ -3,6 +3,8 @@
 
 #include "windows.h"
 #include <SFML\Graphics.hpp>
+#include "SplashScreen.h"
+#include "PhiEngineAudio.h"
 #include <iostream>
 #include <atlstr.h>
 
@@ -29,6 +31,7 @@ private:
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
+	static PhiEngineAudio _audioManager;
 
 
 public:
