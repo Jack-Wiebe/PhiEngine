@@ -180,8 +180,10 @@ bool PhiEngine::Initialize()
 	if (!_mainWindow.isOpen())
 		return false;
 
-	
-	_gameState = Playing;
+
+	//splashscreen
+	SplashScreen::init(_mainWindow.getView().getSize());
+	_gameState = SplashScreen;
 
 	return true;
 }
