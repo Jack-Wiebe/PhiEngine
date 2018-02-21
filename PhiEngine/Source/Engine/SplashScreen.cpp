@@ -1,20 +1,29 @@
 
 #include "SplashScreen.h"
 
+sf::Texture SplashScreen::_splashTex;
+sf::Sprite SplashScreen::_splashSprite;
+
 void SplashScreen::draw(sf::RenderWindow& window)
 {
 
-	sf::Texture _splashTex;
-	if (_splashTex.loadFromFile("Assets/Images/splashscreen.jpg") != true)
+
+	window.draw(_splashSprite);
+	window.display();
+	//std::cout << "SPLASH!" << std::endl;
+
+}
+void SplashScreen::init(sf::Vector2f screenSize)
+{
+
+	if (_splashTex.loadFromFile("../Assets/Images/splashscreen.jpeg") != true)
 	{
 		return;
 	}
 
-	sf::Sprite _splashSprite;
 	_splashSprite.setTexture(_splashTex);
-
-	window.draw(_splashSprite);
-	window.display();
-
-
+	_splashSprite.setPosition(0.0f, 0.0f);
+	_splashSprite.setScale(
+		screenSize.x / _splashSprite.getLocalBounds().width,
+		screenSize.y / _splashSprite.getLocalBounds().height);
 }
