@@ -172,8 +172,15 @@ bool PhiEngine::Initialize()
 	//inti Audio
 	sf::SoundBuffer buffer = sf::SoundBuffer();
 	std::vector<std::string> files = std::vector<std::string>();
-	std::string music = "";
+	///
+	///TODO: this is where you populate sound effects for the game
+	///
+	files.push_back("click.wav");
+
+	std::string music = "splashmusic.ogg";
 	_audioManager.Initialize(buffer, files, music);
+	_audioManager.PlayMusic();
+
 
 	//init Graphics
 	_mainWindow.create({ 1024,769 }, "PhiEngine");
@@ -218,19 +225,27 @@ void PhiEngine::GameLoop()
 	{
 
 		SplashScreen::draw(_mainWindow);
-
+		//_audioManager.PlayMusic();
 		sf::Event m_event;
 		while (_mainWindow.pollEvent(m_event))
 		{
 			if (m_event.type == sf::Event::KeyPressed
 				|| m_event.type == sf::Event::MouseButtonPressed)
 			{
+				_audioManager.StopMusic();
 				_gameState = Menu;
 				break;
 			}
 		}
+
+		
 	}
 
+	if (_gameState == Menu)
+	{
+		_audioManager.PlayOneShot();
+		
+	}
 
 	_mainWindow.clear();
 	_mainWindow.display();

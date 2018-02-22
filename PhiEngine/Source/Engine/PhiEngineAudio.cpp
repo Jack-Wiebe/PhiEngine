@@ -12,7 +12,7 @@ bool PhiEngineAudio::Initialize(sf::SoundBuffer& buffer, std::vector<std::string
 	// Load it from a file
 	for each (std::string file in m_SFXfileList)
 	{
-		if (!buffer.loadFromFile("../Audio/" + file))
+		if (!buffer.loadFromFile("../Assets/Audio/" + file))
 		{
 			// error...
 			return false;
@@ -21,16 +21,30 @@ bool PhiEngineAudio::Initialize(sf::SoundBuffer& buffer, std::vector<std::string
 		tmpSound.setBuffer(buffer);
 		m_soundFXList.push_back(tmpSound);
 	}
-	if (m_music.openFromFile("../Audio/" + musicFile))
+	if (m_music.openFromFile("../Assets/Audio/" + musicFile))
 		return false;
 	
 	return true;
 }
 
-void PhiEngineAudio::PlayOneShot(sf::Sound& sfx) {
+void PhiEngineAudio::PlayOneShot() {
+	m_soundFXList[0].play();
+}
 
+void PhiEngineAudio::PlayMusic() {
+	m_music.play();
 }
 
 void PhiEngineAudio::PlayMusic(sf::Music& music) {
 
+}
+
+void  PhiEngineAudio::PauseMusic()
+{
+	m_music.pause();
+}
+
+void  PhiEngineAudio::StopMusic()
+{
+	m_music.stop();
 }
