@@ -225,7 +225,7 @@ void PhiEngine::GameLoop()
 	{
 
 		SplashScreen::draw(_mainWindow);
-		//_audioManager.PlayMusic();
+
 		sf::Event m_event;
 		while (_mainWindow.pollEvent(m_event))
 		{
@@ -243,7 +243,7 @@ void PhiEngine::GameLoop()
 
 	if (_gameState == Menu)
 	{
-		_audioManager.PlayOneShot();
+		
 		
 	}
 

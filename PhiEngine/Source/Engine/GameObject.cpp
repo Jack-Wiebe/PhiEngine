@@ -18,17 +18,17 @@ GameObject::~GameObject(void)
 	}
 }
 
-void GameObject::setTransform(const sf::Transform & transform)
+void GameObject::setTransform(const TransformComponent & transform)
 {
 	m_transform = transform;
 }
 
-sf::Transform GameObject::GetTransform()
+TransformComponent GameObject::GetTransform()
 {
 	return m_transform;
 }
 
-sf::Transform GameObject::GetWorldTransform()
+TransformComponent GameObject::GetWorldTransform()
 {
 	return m_worldTransform;
 }
@@ -36,10 +36,10 @@ sf::Transform GameObject::GetWorldTransform()
 void GameObject::SetParent(GameObject& parent)
 {
 	m_Parent = &parent;
-	m_Parent->f_AddChild(this);
+	m_Parent->AddChild(this);
 }
 
-void GameObject::f_AddChild(GameObject* child)
+void GameObject::AddChild(GameObject* child)
 {
 	children.push_back(child);
 	child->m_Parent = this;
@@ -59,8 +59,7 @@ void GameObject::Update(float msec)
 	{
 		m_worldTransform = m_transform;
 	}
-	for (std::vector<GameObject*>::iterator i = children.begin;
-		i != children.end(); i++)
+	for (std::vector<GameObject*>::iterator i = children.begin(); i != children.end(); i++)
 	{
 		(*i)->Update(msec);
 	}
