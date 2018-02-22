@@ -13,6 +13,9 @@ private:
 	sf::Music m_music;
 public:
 	bool Initialize(sf::SoundBuffer& buffer, std::vector<std::string> m_SFXFileList, std::string musicFile);
-	void PlayOneShot(sf::Sound& sfx);
+	void PlayOneShot();
+	void PlayMusic();
 	void PlayMusic(sf::Music& music);
+	void PauseMusic();
+	void StopMusic();
 };
