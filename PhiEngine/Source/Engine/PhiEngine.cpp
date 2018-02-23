@@ -191,7 +191,7 @@ bool PhiEngine::Initialize()
 
 
 	//init Graphics
-	_mainWindow.create({ 1024,769 }, "PhiEngine");
+	_mainWindow.create({ 1024,620 }, "PhiEngine");
 	if (!_mainWindow.isOpen())
 		return false;
 	_mainWindow.setFramerateLimit(60);
@@ -267,11 +267,9 @@ void PhiEngine::GameLoop()
 
 				cout << "Test image loaded..." << endl;
 				TEST_SPRITE.setTexture(TEST_TEX);
-				TEST_SPRITE.setOrigin(TEST_SPRITE.getLocalBounds().width / 2, TEST_SPRITE.getLocalBounds().height / 2);
-				TEST_SPRITE.setScale(
-					.2f,
-					.2f);
-				TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
+				TEST_SPRITE.setOrigin(TEST_SPRITE.getLocalBounds().width / 2.0f, TEST_SPRITE.getLocalBounds().height / 2.0f);
+				TEST_SPRITE.setScale(0.2f,0.2f);
+				TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f));
 				
 
 				_gameState = Menu;
@@ -292,7 +290,7 @@ void PhiEngine::GameLoop()
 	case Menu:
 
 		//frame count
-		frameCount =1/( _gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
+		frameCount =1.0f/( _gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
 		_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
 		stream << fixed << setprecision(2) << frameCount;
 
@@ -302,7 +300,7 @@ void PhiEngine::GameLoop()
 	
 		//image positon
 		//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
-		TEST_SPRITE.rotate(1);
+		TEST_SPRITE.rotate(1.0f);
 
 		//rendering
 		_mainWindow.clear(sf::Color::White);
