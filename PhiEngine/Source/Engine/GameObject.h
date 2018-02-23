@@ -15,14 +15,20 @@ public:
 	void SetParent(GameObject& parent);
 	void AddChild(GameObject* child);
 
-	virtual void LateUpdate();
+	void AddComponent(BaseComponent* component);
+
+	virtual void Awake();
+	virtual void Start();
+	virtual void LateUpdate(float msec);
 	virtual void Update(float msec);
 
 protected:
+	unsigned int m_GameObjectID;
 	GameObject* m_Parent;
 	TransformComponent m_worldTransform;
 	TransformComponent m_transform;
-	std::vector<GameObject*> children;
+	std::vector<GameObject*> m_children;
+	std::vector<BaseComponent*> m_components;
 
 private:
 

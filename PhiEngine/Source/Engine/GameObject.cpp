@@ -10,10 +10,10 @@ GameObject::GameObject()
 
 GameObject::~GameObject(void)
 {
-	for (unsigned int i = 0; i < children.size(); i++)
+	for (unsigned int i = 0; i < m_children.size(); i++)
 	{
 	
-		delete children[i];
+		delete m_children[i];
 		
 	}
 }
@@ -41,11 +41,25 @@ void GameObject::SetParent(GameObject& parent)
 
 void GameObject::AddChild(GameObject* child)
 {
-	children.push_back(child);
+	m_children.push_back(child);
 	child->m_Parent = this;
 }
 
-void GameObject::LateUpdate()
+void  GameObject::AddComponent(BaseComponent* component) {
+
+	m_components.push_back(component);
+
+}
+
+void GameObject::Awake(){
+
+}
+
+void GameObject::Start() {
+
+}
+
+void GameObject::LateUpdate(float msec)
 {
 }
 
@@ -59,7 +73,7 @@ void GameObject::Update(float msec)
 	{
 		m_worldTransform = m_transform;
 	}
-	for (std::vector<GameObject*>::iterator i = children.begin(); i != children.end(); i++)
+	for (std::vector<GameObject*>::iterator i = m_children.begin(); i != m_children.end(); i++)
 	{
 		(*i)->Update(msec);
 	}

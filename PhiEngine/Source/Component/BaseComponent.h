@@ -6,7 +6,7 @@ public:
 	virtual void Awake() {}
 	virtual void Start() {}
 	virtual void Update() {}
-	virtual void Late() {}
+	virtual void LateUpdate() {}
 	virtual bool SendMessage(BaseMessage* msg) { return false; }
 
 };

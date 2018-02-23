@@ -18,11 +18,15 @@ public:
 		return trans;
 	}
 
+	bool SendMessage(BaseMessage* msg);
+
 	void Awake();
 	void Start();
 	void Update();
 	void LateUpdate();
-	bool SendMessage(BaseMessage* msg);
+	
+
+protected:
 	sf::Vector2f m_Position;
 	float        m_Rotation;
 	sf::Vector2f m_Scale;
