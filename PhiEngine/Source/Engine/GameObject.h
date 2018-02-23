@@ -5,7 +5,7 @@
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(unsigned int id);
 	~GameObject(void);
 
 	void setTransform(const TransformComponent &transform);
@@ -27,6 +27,7 @@ protected:
 	GameObject* m_Parent;
 	TransformComponent m_worldTransform;
 	TransformComponent m_transform;
+
 	std::vector<GameObject*> m_children;
 	std::vector<BaseComponent*> m_components;
 
