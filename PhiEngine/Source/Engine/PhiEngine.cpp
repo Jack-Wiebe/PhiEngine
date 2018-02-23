@@ -221,6 +221,9 @@ bool PhiEngine::IsExiting()
 
 void PhiEngine::GameLoop()
 {	
+	///
+	///Splash Screen Loop
+	///
 	while (_gameState == SplashScreen)
 	{
 
@@ -241,10 +244,17 @@ void PhiEngine::GameLoop()
 		
 	}
 
-	if (_gameState == Menu)
+	///
+	///Game Logic Layer
+	///
+	switch (_gameState)
 	{
-		
-		
+	case Menu:
+		break;
+	case Paused:
+		break;
+	case Playing:
+		break;
 	}
 
 	_mainWindow.clear();

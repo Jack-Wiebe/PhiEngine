@@ -2,8 +2,9 @@
 
 
 
-GameObject::GameObject()
+GameObject::GameObject(unsigned int id)
 {
+	m_GameObjectID = id;
 	m_Parent = NULL;
 }
 

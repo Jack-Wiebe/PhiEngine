@@ -23,7 +23,7 @@ public:
 private:
 	
 	std::map<unsigned int, GameObject*> m_sceneGraph;
-	static int nextID;
+	static unsigned int newID;
 
 
 };
