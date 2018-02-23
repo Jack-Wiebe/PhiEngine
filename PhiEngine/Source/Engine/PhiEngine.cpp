@@ -4,6 +4,14 @@ using namespace std;
 PhiEngine::GameState PhiEngine::_gameState;
 PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
+GameObjectManager PhiEngine::_gameObjectManager;
+sf::Clock PhiEngine::_gameTime;
+sf::Text PhiEngine::_frameCount;
+sf::Font PhiEngine::_font;
+float PhiEngine::_timeLastFrame = 0.0f;
+
+sf::Texture PhiEngine::TEST_TEX;
+sf::Sprite PhiEngine::TEST_SPRITE;
 
 bool PhiEngine::IsOnlyInstance(LPCTSTR gameTitle)
 {
@@ -186,6 +194,7 @@ bool PhiEngine::Initialize()
 	_mainWindow.create({ 1024,769 }, "PhiEngine");
 	if (!_mainWindow.isOpen())
 		return false;
+	_mainWindow.setFramerateLimit(60);
 
 
 	//splashscreen
@@ -236,6 +245,35 @@ void PhiEngine::GameLoop()
 				|| m_event.type == sf::Event::MouseButtonPressed)
 			{
 				_audioManager.StopMusic();
+				_gameTime = sf::Clock();
+				_frameCount = sf::Text();
+				//_frameCount.setPosition(_mainWindow.getSize().x / 2, _mainWindow.getSize().y / 2);
+				//_frameCount.setFont()
+				if (_font.loadFromFile("../Assets/Fonts/d7.ttf") != true)
+				{
+					cout << "failed to load font" << endl;
+					return;
+				}
+
+				_frameCount.setFont(_font);
+				_frameCount.setPosition(0.0f,0.0f);
+				_frameCount.setFillColor(sf::Color::Magenta);
+
+				if (TEST_TEX.loadFromFile("../Assets/Images/phi.png") != true)
+				{
+					cout << "failed to load image" << endl;
+					return;
+				}
+
+				cout << "Test image loaded..." << endl;
+				TEST_SPRITE.setTexture(TEST_TEX);
+				TEST_SPRITE.setOrigin(TEST_SPRITE.getLocalBounds().width / 2, TEST_SPRITE.getLocalBounds().height / 2);
+				TEST_SPRITE.setScale(
+					.2f,
+					.2f);
+				TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
+				
+
 				_gameState = Menu;
 				break;
 			}
@@ -244,19 +282,42 @@ void PhiEngine::GameLoop()
 		
 	}
 
+	float frameCount;
+	stringstream stream;
 	///
 	///Game Logic Layer
 	///
 	switch (_gameState)
 	{
 	case Menu:
+
+		//frame count
+		frameCount =1/( _gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
+		_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
+		stream << fixed << setprecision(2) << frameCount;
+
+		//text rendering
+		_gameObjectManager.Update(_gameTime.getElapsedTime().asSeconds());
+		_frameCount.setString(stream.str());
+	
+		//image positon
+		//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
+		TEST_SPRITE.rotate(1);
+
+		//rendering
+		_mainWindow.clear(sf::Color::White);
+
+		_mainWindow.draw(TEST_SPRITE);
+		_mainWindow.draw(_frameCount);
+
+		_mainWindow.display();
+
 		break;
 	case Paused:
 		break;
 	case Playing:
 		break;
+	default:
+		break;
 	}
-
-	_mainWindow.clear();
-	_mainWindow.display();
 }

@@ -12,7 +12,7 @@ GameObject* GameObjectManager::Instantiate() {
 
 bool GameObjectManager::SendMessage(BaseMessage* msg) {
 
-
+	return false;
 }
 
 void GameObjectManager::Awake() {

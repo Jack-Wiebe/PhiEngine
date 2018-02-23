@@ -6,6 +6,7 @@ GameObject::GameObject(unsigned int id)
 {
 	m_GameObjectID = id;
 	m_Parent = NULL;
+	m_transform = TransformComponent();
 }
 
 
