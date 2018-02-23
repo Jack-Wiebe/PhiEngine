@@ -12,7 +12,7 @@ public:
 
 	GameObject* Instantiate();
 
-	virtual bool SendMessage(BaseMessage* msg);
+	bool SendMessage(BaseMessage* msg);
 
 	void Awake();
 	void Start();
@@ -24,6 +24,5 @@ private:
 	
 	std::map<unsigned int, GameObject*> m_sceneGraph;
 	static unsigned int newID;
-
 
 };
