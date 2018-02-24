@@ -166,6 +166,7 @@
     <ClCompile Include="Engine\SplashScreen.cpp" />
     <ClCompile Include="Engine\PhiEngineAudio.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameObjectManager.cpp" />
     <ClCompile Include="Component\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="Engine\SplashScreen.h" />
     <ClInclude Include="Engine\PhiEngineAudio.h" />
     <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameObjectManager.h" />
     <ClInclude Include="Component\TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

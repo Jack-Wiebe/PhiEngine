@@ -9,16 +9,27 @@ class TransformComponent : public BaseComponent {
 public:
 	
 	TransformComponent();
-	TransformComponent(float _x, float _y, float _z);
+	TransformComponent(float _x, float _y);
+
+	TransformComponent operator*(const TransformComponent& t)
+	{
+		TransformComponent trans = TransformComponent();
+		trans.transformMatrix = t.transformMatrix * this->transformMatrix;
+		return trans;
+	}
+
+	bool SendMessage(BaseMessage* msg);
 
 	void Awake();
 	void Start();
 	void Update();
 	void LateUpdate();
-	bool SendMessage(BaseMessage* msg);
-	sf::Vector3f m_Position;
-	sf::Vector3f m_Rotation;
-	sf::Vector3f m_Scale;
+	
+
+protected:
+	sf::Vector2f m_Position;
+	float        m_Rotation;
+	sf::Vector2f m_Scale;
 
 	 sf::Transform transformMatrix;
 };

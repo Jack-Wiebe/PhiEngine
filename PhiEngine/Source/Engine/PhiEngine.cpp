@@ -4,6 +4,14 @@ using namespace std;
 PhiEngine::GameState PhiEngine::_gameState;
 PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
+GameObjectManager PhiEngine::_gameObjectManager;
+sf::Clock PhiEngine::_gameTime;
+sf::Text PhiEngine::_frameCount;
+sf::Font PhiEngine::_font;
+float PhiEngine::_timeLastFrame = 0.0f;
+
+sf::Texture PhiEngine::TEST_TEX;
+sf::Sprite PhiEngine::TEST_SPRITE;
 
 bool PhiEngine::IsOnlyInstance(LPCTSTR gameTitle)
 {
@@ -172,13 +180,21 @@ bool PhiEngine::Initialize()
 	//inti Audio
 	sf::SoundBuffer buffer = sf::SoundBuffer();
 	std::vector<std::string> files = std::vector<std::string>();
-	std::string music = "";
+	///
+	///TODO: this is where you populate sound effects for the game
+	///
+	files.push_back("click.wav");
+
+	std::string music = "splashmusic.ogg";
 	_audioManager.Initialize(buffer, files, music);
+	_audioManager.PlayMusic();
+
 
 	//init Graphics
-	_mainWindow.create({ 1024,769 }, "PhiEngine");
+	_mainWindow.create({ 1024,620 }, "PhiEngine");
 	if (!_mainWindow.isOpen())
 		return false;
+	_mainWindow.setFramerateLimit(60);
 
 
 	//splashscreen
@@ -214,6 +230,9 @@ bool PhiEngine::IsExiting()
 
 void PhiEngine::GameLoop()
 {	
+	///
+	///Splash Screen Loop
+	///
 	while (_gameState == SplashScreen)
 	{
 
@@ -225,13 +244,78 @@ void PhiEngine::GameLoop()
 			if (m_event.type == sf::Event::KeyPressed
 				|| m_event.type == sf::Event::MouseButtonPressed)
 			{
+				_audioManager.StopMusic();
+				_gameTime = sf::Clock();
+				_frameCount = sf::Text();
+				//_frameCount.setPosition(_mainWindow.getSize().x / 2, _mainWindow.getSize().y / 2);
+				//_frameCount.setFont()
+				if (_font.loadFromFile("../Assets/Fonts/d7.ttf") != true)
+				{
+					cout << "failed to load font" << endl;
+					return;
+				}
+
+				_frameCount.setFont(_font);
+				_frameCount.setPosition(0.0f,0.0f);
+				_frameCount.setFillColor(sf::Color::Magenta);
+
+				if (TEST_TEX.loadFromFile("../Assets/Images/phi.png") != true)
+				{
+					cout << "failed to load image" << endl;
+					return;
+				}
+
+				cout << "Test image loaded..." << endl;
+				TEST_SPRITE.setTexture(TEST_TEX);
+				TEST_SPRITE.setOrigin(TEST_SPRITE.getLocalBounds().width / 2.0f, TEST_SPRITE.getLocalBounds().height / 2.0f);
+				TEST_SPRITE.setScale(0.2f,0.2f);
+				TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f));
+				
+
 				_gameState = Menu;
 				break;
 			}
 		}
+
+		
 	}
 
+	float frameCount;
+	stringstream stream;
+	///
+	///Game Logic Layer
+	///
+	switch (_gameState)
+	{
+	case Menu:
 
-	_mainWindow.clear();
-	_mainWindow.display();
+		//frame count
+		frameCount =1.0f/( _gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
+		_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
+		stream << fixed << setprecision(2) << frameCount;
+
+		//text rendering
+		_gameObjectManager.Update(_gameTime.getElapsedTime().asSeconds());
+		_frameCount.setString(stream.str());
+	
+		//image positon
+		//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
+		TEST_SPRITE.rotate(1.0f);
+
+		//rendering
+		_mainWindow.clear(sf::Color::White);
+
+		_mainWindow.draw(TEST_SPRITE);
+		_mainWindow.draw(_frameCount);
+
+		_mainWindow.display();
+
+		break;
+	case Paused:
+		break;
+	case Playing:
+		break;
+	default:
+		break;
+	}
 }
