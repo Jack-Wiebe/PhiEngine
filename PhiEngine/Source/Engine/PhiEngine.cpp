@@ -4,11 +4,12 @@ using namespace std;
 PhiEngine::GameState PhiEngine::_gameState;
 PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
-GameObjectManager PhiEngine::_gameObjectManager;
+GameObjectManager* PhiEngine::_gameObjectManager;
 sf::Clock PhiEngine::_gameTime;
 sf::Text PhiEngine::_frameCount;
 sf::Font PhiEngine::_font;
 float PhiEngine::_timeLastFrame = 0.0f;
+GameObjectManager* _gameObjectManager;
 
 sf::Texture PhiEngine::TEST_TEX;
 sf::Sprite PhiEngine::TEST_SPRITE;
@@ -249,7 +250,7 @@ void PhiEngine::GameLoop()
 				_frameCount = sf::Text();
 				//_frameCount.setPosition(_mainWindow.getSize().x / 2, _mainWindow.getSize().y / 2);
 				//_frameCount.setFont()
-				if (_font.loadFromFile("../Assets/Fonts/d7.ttf") != true)
+				/*if (_font.loadFromFile("../Assets/Fonts/d7.ttf") != true)
 				{
 					cout << "failed to load font" << endl;
 					return;
@@ -270,9 +271,9 @@ void PhiEngine::GameLoop()
 				TEST_SPRITE.setOrigin(TEST_SPRITE.getLocalBounds().width / 2.0f, TEST_SPRITE.getLocalBounds().height / 2.0f);
 				TEST_SPRITE.setScale(0.2f,0.2f);
 				TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f));
-				
+				*/
 
-				_gameState = Menu;
+				_gameState = LoadAssets;
 				break;
 			}
 		}
@@ -280,6 +281,27 @@ void PhiEngine::GameLoop()
 		
 	}
 
+	while (_gameState == LoadAssets)
+	{
+		_gameObjectManager = new GameObjectManager();
+		GameObject * player = _gameObjectManager->Instantiate("player");
+		player->SetTexture("phi.png");
+		player->SetSprite();
+		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		player->SetScale(sf::Vector2f(.2f, .2f));
+
+
+		GameObject * child = _gameObjectManager->Instantiate("child");
+		
+		child->SetTexture("phi.png");
+		child->SetSprite();
+		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		child->SetParent(player);
+		//player->SetScale(sf::Vector2f(.10, .05f));
+		_gameState = Playing;
+
+	}
+	
 	float frameCount;
 	stringstream stream;
 	///
@@ -288,16 +310,16 @@ void PhiEngine::GameLoop()
 	switch (_gameState)
 	{
 	case Menu:
-
+	{
 		//frame count
-		frameCount =1.0f/( _gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
+		frameCount = 1.0f / (_gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
 		_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
 		stream << fixed << setprecision(2) << frameCount;
 
 		//text rendering
-		_gameObjectManager.Update(_gameTime.getElapsedTime().asSeconds());
+		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
 		_frameCount.setString(stream.str());
-	
+
 		//image positon
 		//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
 		TEST_SPRITE.rotate(1.0f);
@@ -309,13 +331,32 @@ void PhiEngine::GameLoop()
 		_mainWindow.draw(_frameCount);
 
 		_mainWindow.display();
-
+	}
 		break;
 	case Paused:
+	{
+
+	}
 		break;
 	case Playing:
+	{
+		_mainWindow.clear(sf::Color::White);
+
+		float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
+		std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+		_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
+		std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+
+		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
+		_gameObjectManager->Draw(&_mainWindow);
+
+		_mainWindow.display();
+	}
 		break;
 	default:
+	{
+
+	}
 		break;
 	}
 }
