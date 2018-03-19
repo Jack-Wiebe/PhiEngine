@@ -24,6 +24,19 @@ public:
 	void Start();
 	void Update();
 	void LateUpdate();
+	sf::Transform GetMatrix() {
+		return transformMatrix;
+	}
+	void SetMatrix(sf::Transform t) {
+		transformMatrix = t;
+	}
+	sf::Vector2f GetPosition();
+	float		 GetRotation();
+	sf::Vector2f GetScale();
+
+	void SetPosition(sf::Vector2f pos);
+	void SetRotation(float rot);
+	void SetScale(sf::Vector2f scale);
 	
 
 protected:
@@ -31,5 +44,5 @@ protected:
 	float        m_Rotation;
 	sf::Vector2f m_Scale;
 
-	 sf::Transform transformMatrix;
+	sf::Transform transformMatrix;
 };

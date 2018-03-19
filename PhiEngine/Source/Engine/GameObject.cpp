@@ -7,6 +7,15 @@ GameObject::GameObject(unsigned int id)
 	m_GameObjectID = id;
 	m_Parent = NULL;
 	m_transform = TransformComponent();
+	m_name = std::to_string(m_GameObjectID);
+}
+
+GameObject::GameObject(unsigned int id, std::string name)
+{
+	m_GameObjectID = id;
+	m_Parent = NULL;
+	m_transform = TransformComponent();
+	m_name = name;
 }
 
 
@@ -20,31 +29,72 @@ GameObject::~GameObject(void)
 	}
 }
 
-void GameObject::setTransform(const TransformComponent & transform)
+void GameObject::SetName(std::string name)
+{
+	m_name = name;
+}
+
+std::string GameObject::GetName()
+{
+	return m_name;
+}
+
+
+bool GameObject::SetTexture(std::string filename) 
+{
+
+	if (m_tex.loadFromFile("../Assets/Images/" + filename) != true)
+	{
+		std::cout << "failed to load image" << std::endl;
+		return false;
+	}
+	
+	return true;
+
+}
+void GameObject::SetSprite()
+{
+	m_sprite.setTexture(m_tex);
+	m_sprite.setOrigin(m_sprite.getLocalBounds().width / 2.0f, m_sprite.getLocalBounds().height / 2.0f);
+}
+
+void GameObject::SetScale(sf::Vector2f _scale)
+{
+	m_sprite.setScale(_scale);
+	m_transform.SetScale(_scale);
+}
+
+void GameObject::SetScale(float x, float y)
+{
+	m_sprite.setScale(x,y);
+	m_transform.SetScale(sf::Vector2f(x,y));
+}
+
+void GameObject::SetTransform(const TransformComponent & transform)
 {
 	m_transform = transform;
 }
 
-TransformComponent GameObject::GetTransform()
+TransformComponent* GameObject::GetTransform()
 {
-	return m_transform;
+	return &m_transform;
 }
 
-TransformComponent GameObject::GetWorldTransform()
+TransformComponent* GameObject::GetWorldTransform()
 {
-	return m_worldTransform;
+	return &m_worldTransform;
 }
 
-void GameObject::SetParent(GameObject& parent)
+void GameObject::SetParent(GameObject* parent)
 {
-	m_Parent = &parent;
+	m_Parent = parent;
 	m_Parent->AddChild(this);
 }
 
 void GameObject::AddChild(GameObject* child)
 {
 	m_children.push_back(child);
-	child->m_Parent = this;
+	//child->m_Parent = this;
 }
 
 void  GameObject::AddComponent(BaseComponent* component) {
@@ -69,7 +119,9 @@ void GameObject::Update(float msec)
 {
 	if (m_Parent)
 	{
-		m_worldTransform = m_Parent->m_worldTransform*m_transform;
+		//printf("Parent x: %f, y: %f", m_Parent->GetWorldTransform)
+		m_worldTransform.SetMatrix((m_Parent->GetWorldTransform()->GetMatrix()) * (m_transform.GetMatrix()));
+		//m_worldTransform = m_transform;
 	}
 	else
 	{
@@ -79,4 +131,12 @@ void GameObject::Update(float msec)
 	{
 		(*i)->Update(msec);
 	}
+}
+
+void GameObject::Draw(sf::RenderWindow* mainWindow)
+{
+	m_sprite.setPosition(m_worldTransform.GetPosition());
+	m_sprite.setScale(m_worldTransform.GetScale());
+	m_sprite.setRotation(m_worldTransform.GetRotation());
+	mainWindow->draw(m_sprite);
 }

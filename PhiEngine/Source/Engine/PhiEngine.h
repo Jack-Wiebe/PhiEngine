@@ -29,6 +29,7 @@ private:
 		SplashScreen,
 		Paused,
 		Menu,
+		LoadAssets,
 		Playing,
 		Exiting
 	};
@@ -36,7 +37,7 @@ private:
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
 	static PhiEngineAudio _audioManager;
-	static GameObjectManager _gameObjectManager;
+	static GameObjectManager* _gameObjectManager;
 	static sf::Clock _gameTime;
 
 	static sf::Font _font;
