@@ -10,7 +10,10 @@ class GameObjectManager
 {
 public:
 
+	GameObjectManager();
+
 	GameObject* Instantiate();
+	GameObject* Instantiate(std::string name);
 
 	bool SendMessage(BaseMessage* msg);
 
@@ -18,7 +21,9 @@ public:
 	void Start();
 	void LateUpdate(float msec);
 	void Update(float msec);
+	void Draw(sf::RenderWindow* mainWindow);
 
+	GameObject* FindObjectByName(std::string name);
 
 private:
 	
