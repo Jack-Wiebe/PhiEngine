@@ -1,8 +1,10 @@
 #pragma once
 #include "..\Engine\BaseMessage.h"
+#include "..\Engine\GameObject.h"
 class BaseComponent
 {
 public:
+	GameObject* m_GameObject;
 	virtual void Awake() {}
 	virtual void Start() {}
 	virtual void Update() {}
