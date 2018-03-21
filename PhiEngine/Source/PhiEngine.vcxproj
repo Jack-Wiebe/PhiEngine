@@ -72,18 +72,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
+    <IncludePath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\Box2D\include;C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\Box2D\lib;C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
+    <IncludePath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
+    <IncludePath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\Box2D\include;C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\Box2D\lib;C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\Game\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\Temp\</IntDir>
+    <IncludePath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\J\Documents\GitHub\PhiEngine\PhiEngine\lib\SFML\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,7 +107,7 @@
     <Link>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,7 +123,7 @@
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,7 +143,7 @@
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;$(ProjectDir)..\lib\glm\gml;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,14 +163,16 @@
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;$(ProjectDir)..\lib\glm\gml;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-audio-s.lib;sfml-system-s.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="Component\BaseComponent.cpp" />
+    <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\BaseMessage.cpp" />
     <ClCompile Include="Engine\PhiEngine.cpp" />
+    <ClCompile Include="Engine\PhysicsEngine.cpp" />
     <ClCompile Include="Engine\SplashScreen.cpp" />
     <ClCompile Include="Engine\PhiEngineAudio.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
@@ -172,8 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component\BaseComponent.h" />
+    <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Engine\BaseMessage.h" />
     <ClInclude Include="Engine\PhiEngine.h" />
+    <ClInclude Include="Engine\PhysicsEngine.h" />
     <ClInclude Include="Engine\SplashScreen.h" />
     <ClInclude Include="Engine\PhiEngineAudio.h" />
     <ClInclude Include="Engine\GameObject.h" />

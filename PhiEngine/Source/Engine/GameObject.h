@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Graphics\Transform.hpp>
 #include "..\Component\TransformComponent.h"
+
 #include <vector>
 #include <iostream>
 class GameObject
