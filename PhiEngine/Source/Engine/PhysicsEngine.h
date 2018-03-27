@@ -1,12 +1,19 @@
+#ifndef PHYSICSENGINE_H
+#define PHYSICSENGINE_H
+
 #pragma once
 #include <vector>
 #include <map>
 #include <cmath>
 #include <ctime>
 #include <SFML\Graphics.hpp>
+//#include "..\Component\BaseComponent.h"
 #include "..\Component\PhysicsComponent.h"
-#include "..\Component\TransformComponent.h"
+//#include "..\Component\TransformComponent.h"
+#include "GameObject.h"
 
+
+//class PhysicsComponent;
 
 class PhysicsEngine
 {
@@ -19,12 +26,41 @@ public:
 	float groundedTol;
 	struct CollisionPair
 	{
-		PhysicsComponent* rigidBodyA;
-		PhysicsComponent* rigidBodyB;
+	
+		mutable PhysicsComponent* rigidBodyA;
+		mutable PhysicsComponent* rigidBodyB;
+
+		bool operator<(const CollisionPair &l)const
+		{
+			//CollisionPair returnColPair;
+			//CollisionPair* ogColPair = this;
+
+			//ogColPair->rigidBodyA
+			unsigned int rbA = this->rigidBodyA->m_owner->GetID();
+			unsigned int rbB = this->rigidBodyB->m_owner->GetID();
+			
+			return (l.rigidBodyA->m_owner->GetID() < rbA || l.rigidBodyB->m_owner->GetID() < rbB);
+		}
+
+		//bool operator<(const CollisionPair& lhs, const CollisionPair& rhs) { return lhs == rhs; }
+
+		//bool operator==(const CollisionPair& lhs, const CollisionPair& rhs) { return lhs.i == rhs.i; }
+
+		bool operator==(const CollisionPair &t) const
+		{
+			//CollisionPair* ogColPair = this;
+
+			unsigned int rbA = this->rigidBodyA->m_owner->GetID();
+			unsigned int rbB = this->rigidBodyB->m_owner->GetID();
+
+			return (t.rigidBodyA->m_owner->GetID() == rbA && t.rigidBodyB->m_owner->GetID() == rbB);
+		}
+
 	};
+
 	struct CollisionInfo {
 		sf::Vector2f collisionNormal;
-		float penetration;//;)
+		float penetration;
 	};
 
 	void AddRigidBody(PhysicsComponent* rigidBody);
@@ -34,6 +70,8 @@ public:
 
 	void Update();
 	void LateUpdate();
+
+	template<typename T> std::vector<T>& GetRange(std::vector<T> &ogVec, int initInd, int finalInd);
 
 	~PhysicsEngine();
 protected:
@@ -51,3 +89,5 @@ private:
 	
 
 };
+
+#endif

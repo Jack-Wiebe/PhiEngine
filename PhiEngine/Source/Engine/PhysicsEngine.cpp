@@ -1,9 +1,20 @@
 #include "PhysicsEngine.h"
+#include "..\Component\PhysicsComponent.h"
 
 PhysicsEngine::PhysicsEngine()
 {
-	time = g_time->asSeconds;
+	time = g_time->asSeconds();
 	
+}
+
+template <typename T> std::vector<T>& PhysicsEngine::GetRange(std::vector<T> &ogVec, int initInd, int finalInd)
+{
+	vector<T> newVec;
+	for (int i = a; i <= b, i++)
+	{
+		newVec.push_back(ogVec[i]);
+	}
+	return &newVec;
 }
 
 void PhysicsEngine::AddRigidBody(PhysicsComponent* rigidBody)
@@ -62,9 +73,11 @@ void PhysicsEngine::Integrate(float dT)
 
 void PhysicsEngine::CheckCollisions()
 {
-	for (std::vector<PhysicsComponent*>::iterator bodyA = rigidBodies.begin; bodyA == rigidBodies.end - 1; ++bodyA)
+	for (std::vector<PhysicsComponent*>::iterator bodyA = rigidBodies.begin(); bodyA != rigidBodies.end(); ++bodyA)
 	{
-		for (std::vector<PhysicsComponent*>::iterator bodyB = bodyA; bodyB != rigidBodies.size() - rigidBodies.at*(bodyA);++bodyB)
+		//rigidBodies.size() - rigidBodies.at*(bodyA)
+		//int pos = std::find(rigidBodies.begin(), rigidBodies.end(), bodyA) - rigidBodies.begin();
+		for (std::vector<PhysicsComponent*>::iterator bodyB = bodyA; bodyB != rigidBodies.end(); ++bodyB)
 		{
 			if (bodyA != bodyB)
 			{

@@ -1,14 +1,19 @@
-#pragma once
-#include "BaseComponent.h"
+#ifndef PHYSICSCOMPONENT_H
+#define PHYSICSCOMPONENT_H
+//#include "BaseComponent.h"
 #include <SFML\Graphics\Transform.hpp>
 #include <SFML\System\Vector2.hpp>
 #include <SFML\System\Vector3.hpp>
-#include "..\Engine\PhysicsEngine.h"
-#include "..\Engine\GameObject.h"
+//#include "..\Engine\PhysicsEngine.h"
 #include "..\Component\TransformComponent.h"
+//#include "BaseComponent.h"
 
+class PhysicsEngine;
+//class TransformComponent;
 
-class PhysicsComponent:BaseComponent
+//class BaseComponent;
+
+class PhysicsComponent: public BaseComponent
 {
 public:
 	PhysicsComponent();
@@ -18,13 +23,11 @@ public:
 	bool obeysGravity;
 	bool grounded;
 
-
-
 	TransformComponent transform;
 
 	sf::Vector2f currentVelocity;
 	sf::Vector2f maxVelocity;
-	sf::Vector2f gravity=sf::Vector2f(0.0f, -9.8f);
+
 	struct AABB
 	{
 		public:
@@ -34,23 +37,22 @@ public:
 
 	AABB aabb;
 
-	void Awake() override;
-	void Start() override;
+	void Awake();
+	void Start();
 	void Stop();
-	void Update() override;
-	void LateUpdate() override;
+	void Update();
+	void LateUpdate();
 
-	void AddForc(sf::Vector2f forces);
+	void AddForc(sf::Vector2f);
 	bool isGrounded();
 	void SetAABB();
 	void Integrate(float dt);
-	void SetGravity(sf::Vector2f newGravity);
 
 	~PhysicsComponent();
 private:
-	
 	sf::Vector2f totalForces;
 	PhysicsEngine* engine;
-	sf::Sprite* p_sprite;
 
 };
+
+#endif
