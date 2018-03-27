@@ -2,6 +2,10 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Graphics\Transform.hpp>
 #include "..\Component\TransformComponent.h"
+//#include "..\Component\PhysicsComponent.h"
+
+//class BaseComponent;
+//class TransformComponent;
 
 #include <vector>
 #include <iostream>
@@ -16,6 +20,8 @@ public:
 	void SetSprite();
 	void SetScale(sf::Vector2f _scale);
 	void SetScale(float x, float y);
+
+	unsigned int GetID();
 
 	void SetName(std::string);
 	std::string GetName();

@@ -288,6 +288,7 @@ void PhiEngine::GameLoop()
 		player->SetTexture("phi.png");
 		player->SetSprite();
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		//player->AddComponent(new PhysicsComponent());
 		player->SetScale(sf::Vector2f(.2f, .2f));
 
 
@@ -343,9 +344,9 @@ void PhiEngine::GameLoop()
 		_mainWindow.clear(sf::Color::White);
 
 		float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
-		std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 		_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
-		std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 
 		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
 		_gameObjectManager->Draw(&_mainWindow);

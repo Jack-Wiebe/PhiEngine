@@ -75,6 +75,11 @@ void GameObject::SetTransform(const TransformComponent & transform)
 	m_transform = transform;
 }
 
+unsigned int GameObject::GetID()
+{
+	return m_GameObjectID;
+}
+
 TransformComponent* GameObject::GetTransform()
 {
 	return &m_transform;
@@ -100,6 +105,7 @@ void GameObject::AddChild(GameObject* child)
 void  GameObject::AddComponent(BaseComponent* component) {
 
 	m_components.push_back(component);
+	component->m_owner = this;
 
 }
 
@@ -121,7 +127,9 @@ void GameObject::Update(float msec)
 	{
 		//printf("Parent x: %f, y: %f", m_Parent->GetWorldTransform)
 		m_worldTransform.SetMatrix((m_Parent->GetWorldTransform()->GetMatrix()) * (m_transform.GetMatrix()));
-		//m_worldTransform = m_transform;
+		//m_worldTransform = m_transform * m_Parent->m_worldTransform;
+
+		std::cout << m_transform.GetPosition().x << " " << m_Parent->m_worldTransform.GetPosition().x << std::endl;
 	}
 	else
 	{
@@ -129,6 +137,7 @@ void GameObject::Update(float msec)
 	}
 	for (std::vector<GameObject*>::iterator i = m_children.begin(); i != m_children.end(); i++)
 	{
+		//std::cout << (*i)->GetName() << " " << (*i)->GetID() << std::endl;
 		(*i)->Update(msec);
 	}
 }

@@ -1,4 +1,5 @@
 #include "PhysicsComponent.h"
+#include "..\Engine\PhysicsEngine.h"
 
 PhysicsComponent::PhysicsComponent()
 {

@@ -1,13 +1,19 @@
-#pragma once
-#include "BaseComponent.h"
+#ifndef PHYSICSCOMPONENT_H
+#define PHYSICSCOMPONENT_H
+//#include "BaseComponent.h"
 #include <SFML\Graphics\Transform.hpp>
 #include <SFML\System\Vector2.hpp>
 #include <SFML\System\Vector3.hpp>
-#include "..\Engine\PhysicsEngine.h"
+//#include "..\Engine\PhysicsEngine.h"
 #include "..\Component\TransformComponent.h"
+//#include "BaseComponent.h"
 
+class PhysicsEngine;
+//class TransformComponent;
 
-class PhysicsComponent:BaseComponent
+//class BaseComponent;
+
+class PhysicsComponent: public BaseComponent
 {
 public:
 	PhysicsComponent();
@@ -48,3 +54,5 @@ private:
 	PhysicsEngine* engine;
 
 };
+
+#endif
