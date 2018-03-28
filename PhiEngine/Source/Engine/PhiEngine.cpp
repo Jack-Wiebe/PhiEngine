@@ -299,7 +299,7 @@ void PhiEngine::GameLoop()
 		player->SetTexture("phi.png");
 		player->SetSprite();
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-100));
-		player->AddComponent(new PhysicsComponent(_physicsEngine), "physics_component");
+		player->AddComponent(new PhysicsComponent(_physicsEngine));
 		//player->AddComponent(new PhysicsComponent());
 		player->SetScale(sf::Vector2f(.2f, .2f));
 
@@ -312,7 +312,7 @@ void PhiEngine::GameLoop()
 		//child->SetParent(player);
 		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 300));
 		child->SetScale(sf::Vector2f(.2f, .2f));
-		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0.0,9.8), false, 1.0), "physics_component");
+		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0.0,9.8), false, 1.0));
 		//player->SetScale(sf::Vector2f(.10, .05f));
 
 		_mainUser = child;
