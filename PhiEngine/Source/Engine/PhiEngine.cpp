@@ -284,6 +284,7 @@ void PhiEngine::GameLoop()
 	while (_gameState == LoadAssets)
 	{
 		_gameObjectManager = new GameObjectManager();
+
 		GameObject * player = _gameObjectManager->Instantiate("player");
 		player->SetTexture("phi.png");
 		player->SetSprite();
@@ -296,8 +297,10 @@ void PhiEngine::GameLoop()
 		
 		child->SetTexture("phi.png");
 		child->SetSprite();
-		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		
 		child->SetParent(player);
+		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		child->SetScale(sf::Vector2f(.5f, .5f));
 		//player->SetScale(sf::Vector2f(.10, .05f));
 		_gameState = Playing;
 
