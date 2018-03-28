@@ -245,7 +245,7 @@ void PhiEngine::GameLoop()
 		sf::Event m_event;
 		while (_mainWindow.pollEvent(m_event))
 		{
-			std::cout << "ting" << std::endl;
+			std::cout << "first poll" << std::endl;
 			if (m_event.type == sf::Event::KeyPressed
 				|| m_event.type == sf::Event::MouseButtonPressed)
 			{
@@ -325,61 +325,64 @@ void PhiEngine::GameLoop()
 	///
 	///Game Logic Layer
 	///
-	switch (_gameState)
-	{
-	case Menu:
-	{
-		//frame count
-		frameCount = 1.0f / (_gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
-		_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
-		stream << fixed << setprecision(2) << frameCount;
+	while (true) {
+		switch (_gameState)
+		{
 
-		//text rendering
-		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
-		_frameCount.setString(stream.str());
 
-		//image positon
-		//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
-		TEST_SPRITE.rotate(1.0f);
+		case Menu:
+		{
+			//frame count
+			frameCount = 1.0f / (_gameTime.getElapsedTime().asSeconds() - _timeLastFrame);
+			_timeLastFrame = _gameTime.getElapsedTime().asSeconds();
+			stream << fixed << setprecision(2) << frameCount;
 
-		//rendering
-		_mainWindow.clear(sf::Color::White);
+			//text rendering
+			_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
+			_frameCount.setString(stream.str());
 
-		_mainWindow.draw(TEST_SPRITE);
-		_mainWindow.draw(_frameCount);
+			//image positon
+			//TEST_SPRITE.setPosition((_mainWindow.getSize().x / 2), (_mainWindow.getSize().y / 2));
+			TEST_SPRITE.rotate(1.0f);
 
-		_mainWindow.display();
-	}
+			//rendering
+			_mainWindow.clear(sf::Color::White);
+
+			_mainWindow.draw(TEST_SPRITE);
+			_mainWindow.draw(_frameCount);
+
+			_mainWindow.display();
+		}
 		break;
-	case Paused:
-	{
+		case Paused:
+		{
 
-	}
+		}
 		break;
-	case Playing:
-	{
-		_mainWindow.clear(sf::Color::White);
+		case Playing:
+		{
+			_mainWindow.clear(sf::Color::White);
 
-		//std::cout << _gameState << std::endl;
+			float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
+			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+			_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
+			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 
-		float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
-	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
-		_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
-	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
-		
-		_inputManager->Update(&_mainWindow, _mainUser);
-		_physicsEngine->Update();
-		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
-		_gameObjectManager->Draw(&_mainWindow);
-		
+			_inputManager->Update(&_mainWindow, _mainUser);
+			_physicsEngine->Update();
+			_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
+			_gameObjectManager->Draw(&_mainWindow);
 
-		_mainWindow.display();
-	}
+
+			_mainWindow.display();
+			break;
+		}
+
+		default:
+		{
+
+		}
 		break;
-	default:
-	{
-
-	}
-		break;
+		}
 	}
 }

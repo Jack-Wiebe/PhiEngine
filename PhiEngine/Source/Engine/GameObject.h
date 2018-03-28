@@ -35,9 +35,19 @@ public:
 
 	bool HasParent();
 
-	void AddComponent(BaseComponent* component, std::string name);
-	template <typename T> T* GetComponent(std::string name);
-	BaseComponent* GetComponent(std::string name);
+	void AddComponent(BaseComponent* component);
+
+	template <typename T>inline T* GetComponent()
+	{
+		for (std::vector<BaseComponent*>::iterator it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			if (dynamic_cast<T*>(*it) != NULL)
+			{
+				return (T*)(*it);
+			}
+		}
+		return nullptr;
+	}
 
 	virtual void Awake();
 	virtual void Start();

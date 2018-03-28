@@ -2,15 +2,15 @@
 
 #include "GameObject.h"
 #include "..\Component\PhysicsComponent.h"
-#include <vector>
-#include <map>
-#include <iterator>
+#include <SFML\Graphics.hpp>
 
 
 class InputManager
 {
 public:
 	InputManager();
+
+	sf::RenderWindow* m_window;
 
 	void Update(sf::RenderWindow* mainWindow, GameObject* _user);
 

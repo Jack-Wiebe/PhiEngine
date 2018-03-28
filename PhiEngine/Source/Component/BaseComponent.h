@@ -10,7 +10,6 @@ class BaseComponent
 public:
 
 	GameObject* m_owner;
-	std::string m_type;
 
 	virtual void Awake() {}
 	virtual void Start() {}
