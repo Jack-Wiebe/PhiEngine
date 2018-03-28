@@ -33,6 +33,8 @@ public:
 	void SetParent(GameObject* parent);
 	void AddChild(GameObject* child);
 
+	bool HasParent();
+
 	void AddComponent(BaseComponent* component);
 
 	virtual void Awake();

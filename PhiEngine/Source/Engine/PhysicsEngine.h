@@ -71,6 +71,8 @@ public:
 	void Update();
 	void LateUpdate();
 
+	float Dot(sf::Vector2f ls, sf::Vector2f rs);
+
 	template<typename T> std::vector<T>& GetRange(std::vector<T> &ogVec, int initInd, int finalInd);
 
 	~PhysicsEngine();
@@ -78,7 +80,6 @@ protected:
 	void Integrate(float dT);
 	void CheckCollisions();
 	void ResolveCollisions();
-	void PositionalCorrection(CollisionPair* c);
 public:
 	void UpdatePhysics();
 private:
