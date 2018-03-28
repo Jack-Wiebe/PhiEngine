@@ -8,6 +8,7 @@
 #include "PhiEngineAudio.h"
 #include "GameObjectManager.h"
 #include "PhysicsEngine.h"
+#include "InputManager.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -40,7 +41,9 @@ private:
 	static PhiEngineAudio _audioManager;
 	static GameObjectManager* _gameObjectManager;
 	static PhysicsEngine* _physicsEngine;
+	static InputManager* _inputManager;
 	static sf::Clock _gameTime;
+	static GameObject* _mainUser;
 
 	static sf::Font _font;
 	static sf::Text _frameCount;

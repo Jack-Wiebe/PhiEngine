@@ -115,10 +115,33 @@ bool GameObject::HasParent()
 
 }
 
-void GameObject::AddComponent(BaseComponent* component) {
+void GameObject::AddComponent(BaseComponent* component, std::string _type) {
 
 	m_components.push_back(component);
+	component->m_type = _type;
 	component->m_owner = this;
+}
+
+template <typename T> T* GameObject::GetComponent(std::string type)
+{
+	for (std::vector<BaseComponent*>::iterator it = m_components.begin(); it != m_components.end(); ++it)
+	{
+		if ((*it)->m_type == type)
+		{
+			return dynamic_cast<T*>(*it);
+		}
+	}
+}
+
+BaseComponent* GameObject::GetComponent(std::string type)
+{
+	for (std::vector<BaseComponent*>::iterator it = m_components.begin(); it != m_components.end(); ++it)
+	{
+		if ((*it)->m_type == type)
+		{
+			return (*it);
+		}
+	}
 }
 
 void GameObject::Awake(){

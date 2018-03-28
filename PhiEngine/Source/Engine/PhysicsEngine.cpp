@@ -92,7 +92,6 @@ void PhysicsEngine::CheckCollisions()
 		{
 			if (bodyA != bodyB)
 			{
-				std::cout << "shit fucker" << std::endl;
 				CollisionPair pair;
 				CollisionInfo colInfo;
 				pair.rigidBodyA = (*bodyA);

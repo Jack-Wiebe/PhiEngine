@@ -6,11 +6,13 @@ PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
 GameObjectManager* PhiEngine::_gameObjectManager;
 PhysicsEngine* PhiEngine::_physicsEngine;
+InputManager* PhiEngine::_inputManager;
 sf::Clock PhiEngine::_gameTime;
 sf::Text PhiEngine::_frameCount;
 sf::Font PhiEngine::_font;
 float PhiEngine::_timeLastFrame = 0.0f;
-GameObjectManager* _gameObjectManager;
+GameObject* PhiEngine::_mainUser;
+
 
 sf::Texture PhiEngine::TEST_TEX;
 sf::Sprite PhiEngine::TEST_SPRITE;
@@ -243,6 +245,7 @@ void PhiEngine::GameLoop()
 		sf::Event m_event;
 		while (_mainWindow.pollEvent(m_event))
 		{
+			std::cout << "ting" << std::endl;
 			if (m_event.type == sf::Event::KeyPressed
 				|| m_event.type == sf::Event::MouseButtonPressed)
 			{
@@ -282,16 +285,21 @@ void PhiEngine::GameLoop()
 		
 	}
 
+	///
+	///Load Assets
+	///
 	while (_gameState == LoadAssets)
 	{
 		_gameObjectManager = new GameObjectManager();
 		_physicsEngine = new PhysicsEngine(&_gameTime);
+		_inputManager = new InputManager();
+		
 
 		GameObject * player = _gameObjectManager->Instantiate("player");
 		player->SetTexture("phi.png");
 		player->SetSprite();
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-100));
-		player->AddComponent(new PhysicsComponent(_physicsEngine));
+		player->AddComponent(new PhysicsComponent(_physicsEngine), "physics_component");
 		//player->AddComponent(new PhysicsComponent());
 		player->SetScale(sf::Vector2f(.2f, .2f));
 
@@ -304,8 +312,10 @@ void PhiEngine::GameLoop()
 		//child->SetParent(player);
 		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 300));
 		child->SetScale(sf::Vector2f(.2f, .2f));
-		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0,9.8), false, 1.0));
+		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0.0,9.8), false, 1.0), "physics_component");
 		//player->SetScale(sf::Vector2f(.10, .05f));
+
+		_mainUser = child;
 		_gameState = Playing;
 
 	}
@@ -350,14 +360,18 @@ void PhiEngine::GameLoop()
 	{
 		_mainWindow.clear(sf::Color::White);
 
-		//float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
-	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
-		//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
-	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+		//std::cout << _gameState << std::endl;
 
+		float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
+	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+		_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
+	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
+		
+		_inputManager->Update(&_mainWindow, _mainUser);
+		_physicsEngine->Update();
 		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
 		_gameObjectManager->Draw(&_mainWindow);
-		_physicsEngine->Update();
+		
 
 		_mainWindow.display();
 	}

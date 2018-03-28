@@ -171,6 +171,7 @@
     <ClCompile Include="Component\BaseComponent.cpp" />
     <ClCompile Include="Component\PhysicsComponent.cpp" />
     <ClCompile Include="Engine\BaseMessage.cpp" />
+    <ClCompile Include="Engine\InputManager.cpp" />
     <ClCompile Include="Engine\PhiEngine.cpp" />
     <ClCompile Include="Engine\PhysicsEngine.cpp" />
     <ClCompile Include="Engine\SplashScreen.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Component\BaseComponent.h" />
     <ClInclude Include="Component\PhysicsComponent.h" />
     <ClInclude Include="Engine\BaseMessage.h" />
+    <ClInclude Include="Engine\InputManager.h" />
     <ClInclude Include="Engine\PhiEngine.h" />
     <ClInclude Include="Engine\PhysicsEngine.h" />
     <ClInclude Include="Engine\SplashScreen.h" />

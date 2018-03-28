@@ -35,7 +35,9 @@ public:
 
 	bool HasParent();
 
-	void AddComponent(BaseComponent* component);
+	void AddComponent(BaseComponent* component, std::string name);
+	template <typename T> T* GetComponent(std::string name);
+	BaseComponent* GetComponent(std::string name);
 
 	virtual void Awake();
 	virtual void Start();
