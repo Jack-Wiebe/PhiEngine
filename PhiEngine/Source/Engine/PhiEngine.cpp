@@ -5,6 +5,7 @@ PhiEngine::GameState PhiEngine::_gameState;
 PhiEngineAudio PhiEngine::_audioManager;
 sf::RenderWindow PhiEngine::_mainWindow;
 GameObjectManager* PhiEngine::_gameObjectManager;
+PhysicsEngine* PhiEngine::_physicsEngine;
 sf::Clock PhiEngine::_gameTime;
 sf::Text PhiEngine::_frameCount;
 sf::Font PhiEngine::_font;
@@ -284,11 +285,13 @@ void PhiEngine::GameLoop()
 	while (_gameState == LoadAssets)
 	{
 		_gameObjectManager = new GameObjectManager();
+		_physicsEngine = new PhysicsEngine(&_gameTime);
 
 		GameObject * player = _gameObjectManager->Instantiate("player");
 		player->SetTexture("phi.png");
 		player->SetSprite();
-		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
+		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-100));
+		player->AddComponent(new PhysicsComponent(_physicsEngine));
 		//player->AddComponent(new PhysicsComponent());
 		player->SetScale(sf::Vector2f(.2f, .2f));
 
@@ -298,9 +301,10 @@ void PhiEngine::GameLoop()
 		child->SetTexture("phi.png");
 		child->SetSprite();
 		
-		child->SetParent(player);
-		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)));
-		child->SetScale(sf::Vector2f(.5f, .5f));
+		//child->SetParent(player);
+		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 300));
+		child->SetScale(sf::Vector2f(.2f, .2f));
+		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0,9.8), false, 1.0));
 		//player->SetScale(sf::Vector2f(.10, .05f));
 		_gameState = Playing;
 
@@ -346,13 +350,14 @@ void PhiEngine::GameLoop()
 	{
 		_mainWindow.clear(sf::Color::White);
 
-		float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
+		//float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
 	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
-		_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
+		//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 	//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 
 		_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
 		_gameObjectManager->Draw(&_mainWindow);
+		_physicsEngine->Update();
 
 		_mainWindow.display();
 	}

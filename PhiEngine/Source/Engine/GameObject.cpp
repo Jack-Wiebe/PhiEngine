@@ -115,11 +115,10 @@ bool GameObject::HasParent()
 
 }
 
-void  GameObject::AddComponent(BaseComponent* component) {
+void GameObject::AddComponent(BaseComponent* component) {
 
 	m_components.push_back(component);
 	component->m_owner = this;
-
 }
 
 void GameObject::Awake(){
@@ -159,7 +158,7 @@ void GameObject::Update(float msec)
 
 void GameObject::Draw(sf::RenderWindow* mainWindow)
 {
-	std::cout << "Object " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
+	//std::cout << "Object " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 	m_sprite.setPosition(m_worldTransform.GetPosition());
 	m_sprite.setScale(m_worldTransform.GetScale());
 	m_sprite.setRotation(m_worldTransform.GetRotation());

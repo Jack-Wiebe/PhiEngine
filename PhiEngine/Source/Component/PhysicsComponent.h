@@ -2,6 +2,7 @@
 #define PHYSICSCOMPONENT_H
 //#include "BaseComponent.h"
 #include <SFML\Graphics\Transform.hpp>
+#include <SFML\Graphics.hpp>
 #include <SFML\System\Vector2.hpp>
 #include <SFML\System\Vector3.hpp>
 //#include "..\Engine\PhysicsEngine.h"
@@ -16,12 +17,14 @@ class PhysicsEngine;
 class PhysicsComponent: public BaseComponent
 {
 public:
-	PhysicsComponent();
+	PhysicsComponent(PhysicsEngine* _engine);
+	PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity);
+	PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity, bool, float);
 	float mass;
 	float bounciness;
-
-	bool obeysGravity;
-	bool grounded;
+	sf::Vector2f gravity;
+	bool obeysGravity = true;
+	bool grounded = false;
 
 	TransformComponent transform;
 
@@ -45,6 +48,7 @@ public:
 
 	void AddForc(sf::Vector2f);
 	bool isGrounded();
+	void SetGravity(sf::Vector2f newGravity);
 	void SetAABB();
 	void Integrate(float dt);
 
@@ -52,7 +56,7 @@ public:
 private:
 	sf::Vector2f totalForces;
 	PhysicsEngine* engine;
-
+	sf::Sprite *p_sprite;
 };
 
 #endif

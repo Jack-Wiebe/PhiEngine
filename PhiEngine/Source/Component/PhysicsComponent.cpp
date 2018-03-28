@@ -1,9 +1,33 @@
 #include "PhysicsComponent.h"
 #include "..\Engine\PhysicsEngine.h"
 
-PhysicsComponent::PhysicsComponent()
+PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine)
 {
-	
+	engine = _engine;
+	gravity = sf::Vector2f(0, 9.8);
+	SetAABB();
+	engine->AddRigidBody(this);
+	mass = 1.0;
+}
+
+PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity)
+{
+	engine = _engine;
+	gravity = _gravity;
+	SetAABB();
+	engine->AddRigidBody(this);
+	obeysGravity = true;
+	mass = 1.0;
+}
+
+PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity, bool _isGravity, float _mass)
+{
+	engine = _engine;
+	gravity = _gravity;
+	SetAABB();
+	engine->AddRigidBody(this);
+	obeysGravity = _isGravity;
+	mass = _mass;
 }
 
 void PhysicsComponent::Awake()
@@ -59,6 +83,8 @@ void PhysicsComponent::SetAABB()
 
 void PhysicsComponent::Integrate(float dt)
 {
+
+	//std::cout << "INner Integrate" << std::endl;
 	if (obeysGravity && !isGrounded())
 	{
 		AddForc(gravity);
@@ -80,9 +106,11 @@ void PhysicsComponent::Integrate(float dt)
 
 	currentVelocity += acceleration*dt;
 
-	sf::Vector2f temp = transform.GetPosition();
+	sf::Vector2f temp = this->m_owner->GetTransform()->GetPosition();
+		//transform.GetPosition();
 	temp += currentVelocity*dt;
-	transform.SetPosition(temp);
+	this->m_owner->GetTransform()->SetPosition(temp);
+
 	SetAABB();
 	
 	sf::Vector2f zero(0, 0);

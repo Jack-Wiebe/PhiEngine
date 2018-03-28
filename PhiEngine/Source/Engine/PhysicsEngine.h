@@ -18,7 +18,7 @@
 class PhysicsEngine
 {
 public:
-	PhysicsEngine();
+	PhysicsEngine(sf::Clock* _clock);
 public:
 	sf::Clock* g_Clock;
 	sf::Time* g_time;

@@ -7,6 +7,7 @@
 #include "SplashScreen.h"
 #include "PhiEngineAudio.h"
 #include "GameObjectManager.h"
+#include "PhysicsEngine.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -38,6 +39,7 @@ private:
 	static sf::RenderWindow _mainWindow;
 	static PhiEngineAudio _audioManager;
 	static GameObjectManager* _gameObjectManager;
+	static PhysicsEngine* _physicsEngine;
 	static sf::Clock _gameTime;
 
 	static sf::Font _font;

@@ -1,9 +1,9 @@
 #include "PhysicsEngine.h"
 #include "..\Component\PhysicsComponent.h"
 
-PhysicsEngine::PhysicsEngine()
+PhysicsEngine::PhysicsEngine(sf::Clock* _clock)
 {
-	time = g_time->asSeconds();
+	g_Clock = _clock;
 	
 }
 
@@ -70,10 +70,16 @@ PhysicsEngine::~PhysicsEngine()
 
 void PhysicsEngine::Integrate(float dT)
 {
-	for each(PhysicsComponent* rb in rigidBodies)
+	
+	for (std::vector<PhysicsComponent*>::iterator it = rigidBodies.begin(); it != rigidBodies.end(); ++it)
+	{
+		//std::cout << "outer Integrate" << std::endl;
+		(*it)->Integrate(dT);
+	}
+	/*for each(PhysicsComponent* rb in rigidBodies)
 	{
 		rb->Integrate(dT);
-	}
+	}*/
 }
 
 void PhysicsEngine::CheckCollisions()
@@ -86,6 +92,7 @@ void PhysicsEngine::CheckCollisions()
 		{
 			if (bodyA != bodyB)
 			{
+				std::cout << "shit fucker" << std::endl;
 				CollisionPair pair;
 				CollisionInfo colInfo;
 				pair.rigidBodyA = (*bodyA);
@@ -209,7 +216,8 @@ void PhysicsEngine::ResolveCollisions()
 
 void PhysicsEngine::UpdatePhysics()
 {
+	//std::cout << g_Clock->getElapsedTime().asSeconds() << std::endl;
 	CheckCollisions();
 	ResolveCollisions();
-	Integrate(time);
+	Integrate(g_Clock->getElapsedTime().asSeconds());
 }
