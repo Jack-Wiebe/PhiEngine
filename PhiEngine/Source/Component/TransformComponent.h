@@ -5,7 +5,8 @@
 #include <SFML\System\Vector3.hpp>
 
 
-class TransformComponent : public BaseComponent {
+class TransformComponent : public BaseComponent 
+{
 public:
 	
 	TransformComponent();
