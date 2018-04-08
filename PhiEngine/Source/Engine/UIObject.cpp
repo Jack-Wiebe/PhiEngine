@@ -43,7 +43,9 @@ bool UIObject::SetFont(std::string filename)
 	if (m_font.loadFromFile("../Assets/Images/" + filename) != true)
 	{
 		std::cout << "failed to load font" << std::endl;
+		return false;
 	}
+	return true;
 }
 
 void UIObject::SetColor(sf::Color col)

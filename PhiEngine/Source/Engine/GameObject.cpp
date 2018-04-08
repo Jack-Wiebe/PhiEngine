@@ -75,6 +75,11 @@ void GameObject::SetTransform(const TransformComponent & transform)
 	m_transform = transform;
 }
 
+unsigned int GameObject::GetID()
+{
+	return m_GameObjectID;
+}
+
 TransformComponent* GameObject::GetTransform()
 {
 	return &m_transform;
@@ -97,11 +102,35 @@ void GameObject::AddChild(GameObject* child)
 	//child->m_Parent = this;
 }
 
-void  GameObject::AddComponent(BaseComponent* component) {
-
-	m_components.push_back(component);
+bool GameObject::HasParent()
+{
+	if (m_Parent)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 
 }
+
+void GameObject::AddComponent(BaseComponent* component) {
+
+	m_components.push_back(component);
+	component->m_owner = this;
+}
+
+/*BaseComponent* GameObject::GetComponent(std::string type)
+{
+	for (std::vector<BaseComponent*>::iterator it = m_components.begin(); it != m_components.end(); ++it)
+	{
+		if ((*it)->m_type == type)
+		{
+			return (*it);
+		}
+	}
+}*/
 
 void GameObject::Awake(){
 
@@ -120,21 +149,27 @@ void GameObject::Update(float msec)
 	if (m_Parent)
 	{
 		//printf("Parent x: %f, y: %f", m_Parent->GetWorldTransform)
-		m_worldTransform.SetMatrix((m_Parent->GetWorldTransform()->GetMatrix()) * (m_transform.GetMatrix()));
-		//m_worldTransform = m_transform;
+		//m_worldTransform.SetMatrix((m_Parent->GetWorldTransform()->GetMatrix()) * (m_transform.GetMatrix()));
+		m_worldTransform = m_transform * m_Parent->m_worldTransform;
+		//m_transform = m_Parent->m_worldTransform;
+
+		std::cout << "Child " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 	}
 	else
 	{
+		std::cout << "Parent: " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 		m_worldTransform = m_transform;
 	}
 	for (std::vector<GameObject*>::iterator i = m_children.begin(); i != m_children.end(); i++)
 	{
+		//std::cout << (*i)->GetName() << " " << (*i)->GetID() << std::endl;
 		(*i)->Update(msec);
 	}
 }
 
 void GameObject::Draw(sf::RenderWindow* mainWindow)
 {
+	//std::cout << "Object " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 	m_sprite.setPosition(m_worldTransform.GetPosition());
 	m_sprite.setScale(m_worldTransform.GetScale());
 	m_sprite.setRotation(m_worldTransform.GetRotation());

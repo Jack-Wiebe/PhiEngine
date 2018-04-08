@@ -2,6 +2,11 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\Graphics\Transform.hpp>
 #include "..\Component\TransformComponent.h"
+//#include "..\Component\PhysicsComponent.h"
+
+//class BaseComponent;
+//class TransformComponent;
+
 #include <vector>
 #include <iostream>
 class GameObject
@@ -16,6 +21,8 @@ public:
 	void SetScale(sf::Vector2f _scale);
 	void SetScale(float x, float y);
 
+	unsigned int GetID();
+
 	void SetName(std::string);
 	std::string GetName();
 
@@ -26,7 +33,21 @@ public:
 	void SetParent(GameObject* parent);
 	void AddChild(GameObject* child);
 
+	bool HasParent();
+
 	void AddComponent(BaseComponent* component);
+
+	template <typename T>inline T* GetComponent()
+	{
+		for (std::vector<BaseComponent*>::iterator it = m_components.begin(); it != m_components.end(); ++it)
+		{
+			if (dynamic_cast<T*>(*it) != NULL)
+			{
+				return (T*)(*it);
+			}
+		}
+		return nullptr;
+	}
 
 	virtual void Awake();
 	virtual void Start();

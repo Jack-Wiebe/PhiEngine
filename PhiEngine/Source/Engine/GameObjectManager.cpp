@@ -69,7 +69,8 @@ void GameObjectManager::LateUpdate(float msec) {
 void GameObjectManager::Update(float msec) {
 
 	for (std::map<unsigned int, GameObject*>::iterator i = m_sceneGraph.begin(); i != m_sceneGraph.end(); ++i) {
-		(i->second)->Update(msec);
+		if(!i->second->HasParent())
+			(i->second)->Update(msec);
 	}
 
 }
