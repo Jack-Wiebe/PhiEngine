@@ -107,7 +107,7 @@
     <Link>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,7 +123,7 @@
       <ProgramDatabaseFile>$(TargerDir)$(TargetName).pdb</ProgramDatabaseFile>
       <MapFileName>$(TargetDir)$(TargetName).map</MapFileName>
       <AdditionalLibraryDirectories>$(ProjectDir)..\lib\SFML\lib\static-std;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;winmm.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;sfml-system-s-d.lib;freetype.lib;jpeg.lib;opengl32.lib;openal32.lib;winmm.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

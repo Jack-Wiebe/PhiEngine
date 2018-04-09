@@ -20,6 +20,7 @@ public:
 	void SetSprite();
 	void SetScale(sf::Vector2f _scale);
 	void SetScale(float x, float y);
+	sf::Sprite* GetSprite();
 
 	unsigned int GetID();
 

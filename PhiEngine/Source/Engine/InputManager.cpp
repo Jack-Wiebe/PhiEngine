@@ -51,8 +51,12 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user)
 					phyComp->currentVelocity = sf::Vector2f(0, 0);
 					phyComp->AddForc(sf::Vector2f(0, .1));
 				}
+
 			}
-			
+			if (m_event.key.code == sf::Keyboard::P)
+			{
+				system("pause");
+			}
 		}
 		std::cout << "exit" << std::endl;
 	}
