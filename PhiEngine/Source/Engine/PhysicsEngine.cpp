@@ -92,25 +92,40 @@ void PhysicsEngine::CheckCollisions()
 		{
 			if (bodyA != bodyB)
 			{
+				std::cout << "Check" << std::endl;
+				
 				CollisionPair pair;
 				CollisionInfo colInfo;
 				pair.rigidBodyA = (*bodyA);
 				pair.rigidBodyB = (*bodyB);
-				sf::Vector2f distance = (*bodyB)->transform.GetPosition() - (*bodyB)->transform.GetPosition();
-
-				sf::Vector2f halfsizeA = ((*bodyB)->aabb.tRight - (*bodyB)->aabb.bleft);
+				sf::Vector2f distance = (*bodyB)->transform->GetPosition() - (*bodyA)->transform->GetPosition();
+				//sf::Vector2f distance = pair.rigidBodyA->m_owner->GetTransform()->GetPosition() - pair.rigidBodyB->m_owner->GetTransform()->GetPosition();
+				/*std::cout << pair.rigidBodyA->m_owner->GetName() << std::endl;
+				std::cout << pair.rigidBodyB->m_owner->GetName() << std::endl;*/
+				//std::cout << pair.rigidBodyA->m_owner->GetTransform()->GetPosition().y << std::endl;
+				//std::cout << (*bodyA)->transform->GetPosition().y << std::endl;
+				std::cout << "dis x" << distance.x << "|| dis y" << distance.y << std::endl;
+				
+				sf::Vector2f halfsizeA = ((*bodyA)->aabb.tRight - (*bodyA)->aabb.bleft);
 				halfsizeA = halfsizeA / 2.0f;
 				sf::Vector2f halfsizeB = ((*bodyB)->aabb.tRight - (*bodyB)->aabb.bleft);
 				halfsizeB = halfsizeB / 2.0f;
 
-				sf::Vector2f gap = sf::Vector2f(abs(distance.x), abs(distance.y)) - (halfsizeA + halfsizeB);
-
-				if (gap.x < 0 && gap.y < 0)
+				float absDistX = abs(distance.x);
+				std::cout << absDistX << std::endl;
+				sf::Vector2f gap = sf::Vector2f(absDistX, abs(distance.y));
+				
+				
+				std::cout << "gap x->" << gap.x << "|| gap y->"<<gap.y << std::endl;
+				std::cout << std::endl;
+				if (gap.x <= 0.1f && gap.y <= 0.1f)
 				{
+					std::cout << "gap.x < 0 && gap.y < 0" <<std:: endl;
 					std::map<PhysicsEngine::CollisionPair, PhysicsEngine::CollisionInfo>::iterator it = collisions.find(pair);
 					if (it != collisions.end())
 					{
 						//element found;
+						std::cout << "map check" << std::endl;
 						collisions.erase(it);
 					}
 
@@ -118,10 +133,12 @@ void PhysicsEngine::CheckCollisions()
 					{
 						if (distance.x > 0)
 						{
+							system("pause");
 							colInfo.collisionNormal = sf::Vector2f(1.0f, 0.0f);
 						}
 						else
 						{
+							system("pause");
 							colInfo.collisionNormal = sf::Vector2f(-1.0f, 0.0f);
 						}
 						colInfo.penetration = gap.x;
@@ -130,6 +147,7 @@ void PhysicsEngine::CheckCollisions()
 					{
 						if (distance.y > 0)
 						{
+							
 							colInfo.collisionNormal = sf::Vector2f(0.0f, 1.0f);
 						}
 						else
@@ -150,7 +168,9 @@ void PhysicsEngine::CheckCollisions()
 					}
 				}
 			}
+			
 		}
+		
 	}
 }
 
@@ -159,6 +179,7 @@ void PhysicsEngine::ResolveCollisions()
 
 	for (std::map<PhysicsEngine::CollisionPair, PhysicsEngine::CollisionInfo>::iterator it = collisions.begin(); it != collisions.end(); ++it)
 	{
+		std::cout << "resolve" << std::endl;
 		float minBounce = std::min(it->first.rigidBodyA->bounciness, it->first.rigidBodyB->bounciness);
 		float velAlongNormal = Dot(it->first.rigidBodyB->currentVelocity - it->first.rigidBodyA->currentVelocity, it->second.collisionNormal);
 		if (velAlongNormal > 0) continue;
@@ -199,13 +220,13 @@ void PhysicsEngine::ResolveCollisions()
 
 			sf::Vector2f correction = percent * it->second.penetration / (invMassA + invMassB) * -it->second.collisionNormal;
 
-			sf::Vector2f temp = it->first.rigidBodyA->transform.GetPosition();
+			sf::Vector2f temp = it->first.rigidBodyA->transform->GetPosition();
 			temp -= invMassA * correction;
-			it->first.rigidBodyA->transform.SetPosition(temp);
+			it->first.rigidBodyA->transform->SetPosition(temp);
 
-			temp = it->first.rigidBodyB->transform.GetPosition();
+			temp = it->first.rigidBodyB->transform->GetPosition();
 			temp += invMassB * correction;
-			it->first.rigidBodyB->transform.SetPosition(temp);
+			it->first.rigidBodyB->transform->SetPosition(temp);
 
 		}
 

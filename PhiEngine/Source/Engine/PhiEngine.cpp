@@ -299,10 +299,9 @@ void PhiEngine::GameLoop()
 		player->SetTexture("phi.png");
 		player->SetSprite();
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-100));
-		player->AddComponent(new PhysicsComponent(_physicsEngine));
-		//player->AddComponent(new PhysicsComponent());
 		player->SetScale(sf::Vector2f(.2f, .2f));
-
+		player->AddComponent(new PhysicsComponent(_physicsEngine));
+		player->GetComponent<PhysicsComponent>()->Awake();
 
 		GameObject * child = _gameObjectManager->Instantiate("child");
 		
@@ -313,6 +312,7 @@ void PhiEngine::GameLoop()
 		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 300));
 		child->SetScale(sf::Vector2f(.2f, .2f));
 		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0.0,9.8), false, 1.0));
+		child->GetComponent<PhysicsComponent>()->Awake();
 		//player->SetScale(sf::Vector2f(.10, .05f));
 
 		_mainUser = child;
@@ -365,7 +365,7 @@ void PhiEngine::GameLoop()
 
 			float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
 			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
-			_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
+			//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 
 			_inputManager->Update(&_mainWindow, _mainUser);

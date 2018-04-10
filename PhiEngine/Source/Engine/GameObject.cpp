@@ -70,6 +70,11 @@ void GameObject::SetScale(float x, float y)
 	m_transform.SetScale(sf::Vector2f(x,y));
 }
 
+sf::Sprite * GameObject::GetSprite()
+{
+	return &m_sprite;
+}
+
 void GameObject::SetTransform(const TransformComponent & transform)
 {
 	m_transform = transform;
@@ -119,6 +124,7 @@ void GameObject::AddComponent(BaseComponent* component) {
 
 	m_components.push_back(component);
 	component->m_owner = this;
+	std::cout << component->m_owner->GetName() << std::endl;
 }
 
 /*BaseComponent* GameObject::GetComponent(std::string type)
@@ -153,11 +159,11 @@ void GameObject::Update(float msec)
 		m_worldTransform = m_transform * m_Parent->m_worldTransform;
 		//m_transform = m_Parent->m_worldTransform;
 
-		std::cout << "Child " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
+		//std::cout << "Child " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 	}
 	else
 	{
-		std::cout << "Parent: " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
+		//std::cout << "Parent: " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;
 		m_worldTransform = m_transform;
 	}
 	for (std::vector<GameObject*>::iterator i = m_children.begin(); i != m_children.end(); i++)

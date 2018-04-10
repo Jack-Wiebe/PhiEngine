@@ -26,7 +26,7 @@ public:
 	bool obeysGravity = true;
 	bool grounded = false;
 
-	TransformComponent transform;
+	TransformComponent* transform;
 
 	sf::Vector2f currentVelocity;
 	sf::Vector2f maxVelocity;

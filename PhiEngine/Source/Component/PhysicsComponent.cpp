@@ -4,9 +4,9 @@
 PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine)
 {
 	engine = _engine;
-	gravity = sf::Vector2f(0, 9.8);
-	SetAABB();
+	gravity = sf::Vector2f(0, 0.0000001f);
 	engine->AddRigidBody(this);
+	obeysGravity = true;
 	mass = 1.0;
 }
 
@@ -14,7 +14,6 @@ PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity
 {
 	engine = _engine;
 	gravity = _gravity;
-	SetAABB();
 	engine->AddRigidBody(this);
 	obeysGravity = true;
 	mass = 1.0;
@@ -24,7 +23,6 @@ PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity
 {
 	engine = _engine;
 	gravity = _gravity;
-	SetAABB();
 	engine->AddRigidBody(this);
 	obeysGravity = _isGravity;
 	mass = _mass;
@@ -32,12 +30,15 @@ PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine, sf::Vector2f _gravity
 
 void PhysicsComponent::Awake()
 {
+	transform = this->m_owner->GetTransform();
+	p_sprite = this->m_owner->GetSprite();
+	SetAABB();
 }
 
 void PhysicsComponent::Start()
 {
-	SetAABB();
 	engine->AddRigidBody(this);
+	SetAABB();
 }
 
 void PhysicsComponent::Stop()
@@ -69,13 +70,16 @@ bool PhysicsComponent::isGrounded()
 void PhysicsComponent::SetAABB()
 {
 	sf::FloatRect bounds;
-	if (p_sprite)
+	if (p_sprite!=nullptr)
 	{
-	  bounds= p_sprite->getGlobalBounds();
+		bounds = p_sprite->getGlobalBounds();
+
+		//std::cout << this->m_owner->GetName() << " has sprite" << std::endl;
 	}
 	else
 	{
-		bounds = sf::FloatRect(transform.GetPosition().x, transform.GetPosition().y, transform.GetScale().x, transform.GetScale().y);
+		//std::cout << transform->GetPosition().x << std::endl;
+		bounds = sf::FloatRect(this->m_owner->GetTransform()->GetPosition().x, this->m_owner->GetTransform()->GetPosition().y, this->m_owner->GetTransform()->GetScale().x, this->m_owner->GetTransform()->GetScale().y);
 	}
 	aabb.bleft = sf::Vector2f(bounds.left, (bounds.top + bounds.height));
 	aabb.tRight = sf::Vector2f((bounds.left + bounds.width), bounds.top);
