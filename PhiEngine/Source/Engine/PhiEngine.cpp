@@ -309,7 +309,7 @@ void PhiEngine::GameLoop()
 		child->SetSprite();
 		
 		//child->SetParent(player);
-		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 300));
+		child->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)+ 100));
 		child->SetScale(sf::Vector2f(.2f, .2f));
 		child->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0.0,9.8), false, 1.0));
 		child->GetComponent<PhysicsComponent>()->Awake();

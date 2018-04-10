@@ -4,7 +4,7 @@
 PhysicsComponent::PhysicsComponent(PhysicsEngine* _engine)
 {
 	engine = _engine;
-	gravity = sf::Vector2f(0, 0.0000001f);
+	gravity = sf::Vector2f(0, 0.00001f);
 	engine->AddRigidBody(this);
 	obeysGravity = true;
 	mass = 1.0;

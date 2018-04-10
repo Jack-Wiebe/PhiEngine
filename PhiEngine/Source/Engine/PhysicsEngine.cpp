@@ -112,13 +112,14 @@ void PhysicsEngine::CheckCollisions()
 				halfsizeB = halfsizeB / 2.0f;
 
 				float absDistX = abs(distance.x);
+				float  absDisty = abs(distance.y);
 				std::cout << absDistX << std::endl;
-				sf::Vector2f gap = sf::Vector2f(absDistX, abs(distance.y));
+				sf::Vector2f gap = sf::Vector2f(absDistX, absDisty);
 				
 				
 				std::cout << "gap x->" << gap.x << "|| gap y->"<<gap.y << std::endl;
 				std::cout << std::endl;
-				if (gap.x <= 0.1f && gap.y <= 0.1f)
+				if (gap.x < 0.5f && gap.y < 0.5f)
 				{
 					std::cout << "gap.x < 0 && gap.y < 0" <<std:: endl;
 					std::map<PhysicsEngine::CollisionPair, PhysicsEngine::CollisionInfo>::iterator it = collisions.find(pair);
