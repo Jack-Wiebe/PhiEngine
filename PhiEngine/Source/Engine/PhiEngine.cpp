@@ -298,7 +298,7 @@ void PhiEngine::GameLoop()
 		GameObject * player = _gameObjectManager->Instantiate("player");
 		player->SetTexture("phi.png");
 		player->SetSprite();
-		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-100));
+		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-150));
 		player->SetScale(sf::Vector2f(.2f, .2f));
 		player->AddComponent(new PhysicsComponent(_physicsEngine));
 		player->GetComponent<PhysicsComponent>()->Awake();
