@@ -109,7 +109,7 @@ void PhysicsEngine::CheckCollisions()
 				
 				sf::Vector2f halfsizeAbase = ((*bodyA)->aabb.tRight - (*bodyA)->aabb.bleft);
 				//printf("haldsizeAbase.y: %f\n", halfsizeAbase.y);
-				sf::Vector2f halfsizeA = sf::Vector2f((abs(halfsizeAbase.x)*-1)+ abs(halfsizeAbase.x),abs(halfsizeAbase.y));
+				sf::Vector2f halfsizeA = sf::Vector2f(abs(halfsizeAbase.x),abs(halfsizeAbase.y));
 				halfsizeA = halfsizeA / 2.0f;
 				sf::Vector2f halfsizeBbase = ((*bodyB)->aabb.tRight - (*bodyB)->aabb.bleft);
 				sf::Vector2f halfsizeB = sf::Vector2f(abs(halfsizeBbase.x), abs(halfsizeBbase.y) );
@@ -135,7 +135,7 @@ void PhysicsEngine::CheckCollisions()
 				
 				//std::cout << "gap x->" << gap.x << "|| gap y->"<<gap.y << std::endl;
 				//std::cout << std::endl;
-				if (gap.x <=0.0f && gap.y <= 0.0f)
+				if (gap.x <0.0f && gap.y < 0.0f)
 				{
 					//std::cout << "gap.x < 0 && gap.y < 0" <<std:: endl;
 					std::map<PhysicsEngine::CollisionPair, PhysicsEngine::CollisionInfo>::iterator it = collisions.find(pair);
@@ -195,7 +195,7 @@ void PhysicsEngine::CheckCollisions()
 						//std::cout << "poop" << std::endl;
 						//element found;
 						collisions.erase(it);
-						std::cout << "poop" << std::endl;
+						std::cout << "Collision erased" << std::endl;
 					}
 				}
 			}
@@ -213,36 +213,51 @@ void PhysicsEngine::ResolveCollisions()
 		
 		float minBounce = std::min(it->first.rigidBodyA->bounciness, it->first.rigidBodyB->bounciness);
 		float velAlongNormal = Dot(it->first.rigidBodyB->currentVelocity - it->first.rigidBodyA->currentVelocity, it->second.collisionNormal);
-		if (velAlongNormal > 0) continue;
+		if (velAlongNormal > 0)
+		{
+			continue;
+		}
 
 		float j = -(1 + minBounce) * velAlongNormal;
 		float invMassA, invMassB;
 		
-		if (it->first.rigidBodyA->mass = 0)
+		if (it->first.rigidBodyA->mass == 0)
 		{
 			invMassA = 0;
+			printf("hello2");
 		}
 		else
 		{
+			std::cout << it->first.rigidBodyA->m_owner->GetName() << std::endl;
+			//it->first.rigidBodyA->mass = 10;
+			printf("mass A before=%f\n", it->first.rigidBodyA->mass);
+			//it->first.rigidBodyA->mass = 10;
 			invMassA = 1 / it->first.rigidBodyA->mass;
+			printf("invMassA=%f\n", invMassA);
 		}
-		if (it->first.rigidBodyB->mass = 0)
+		if (it->first.rigidBodyB->mass == 0)
 		{
+			printf("hello");
 			invMassB = 0;
 		}
 		else
 		{
+			//it->first.rigidBodyB->mass = 10;
+			std::cout<<it->first.rigidBodyB->m_owner->GetName()<<std::endl;
+			printf("mass B before=%f\n", it->first.rigidBodyB->mass);
 			invMassB = 1 / it->first.rigidBodyB->mass;
+			printf("invMassB=%f\n", invMassB);
 		}
 
 		j /= invMassA + invMassB;
-
+		printf("j=%f\n", j);
 		sf::Vector2f impluse = j * it->second.collisionNormal;
-
+		printf("before impulse added\n CurrentV A %f, %f\n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
 		it->first.rigidBodyA->currentVelocity -= invMassA * impluse;
 		it->first.rigidBodyB->currentVelocity += invMassB * impluse;
+		printf("After impulse added\n CurrentV A %f, %f \n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
 
-		/*if (std::abs(it->second.penetration) > 0.01f)
+		if (std::abs(it->second.penetration) > 0.01f)
 		{
 			const float percent = 0.2;
 
@@ -265,10 +280,9 @@ void PhysicsEngine::ResolveCollisions()
 			temp = it->first.rigidBodyB->transform->GetPosition();
 			temp += invMassB * correction;
 			it->first.rigidBodyB->transform->SetPosition(temp);
-			std::cout << "resolve" << std::endl;
-			system("pause");
+			
 
-		}*/
+		}
 
 		//system("pause");
 	}

@@ -56,6 +56,13 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user)
 			if (m_event.key.code == sf::Keyboard::P)
 			{
 				system("pause");
+				
+			}
+			if (m_event.key.code == sf::Keyboard::Escape)
+			{
+				
+				_mainWindow->close();
+				exit(EXIT_SUCCESS);
 			}
 		}
 		std::cout << "exit" << std::endl;

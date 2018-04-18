@@ -301,7 +301,10 @@ void PhiEngine::GameLoop()
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-150));
 		player->SetScale(sf::Vector2f(.2f, .2f));
 		player->AddComponent(new PhysicsComponent(_physicsEngine));
+		player->GetComponent<PhysicsComponent>()->mass = 100;
+		printf("Player mass=%f", player->GetComponent<PhysicsComponent>()->mass);
 		player->GetComponent<PhysicsComponent>()->Awake();
+		
 
 		GameObject * child = _gameObjectManager->Instantiate("child");
 		
@@ -362,13 +365,15 @@ void PhiEngine::GameLoop()
 		case Playing:
 		{
 			_mainWindow.clear(sf::Color::White);
-
+			sf::Event m_event;
 			float lastRot = _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation();
 			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 			//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 			//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 
 			_inputManager->Update(&_mainWindow, _mainUser);
+			
+			
 			_physicsEngine->Update();
 			_gameObjectManager->Update(_gameTime.getElapsedTime().asSeconds());
 			_gameObjectManager->Draw(&_mainWindow);
