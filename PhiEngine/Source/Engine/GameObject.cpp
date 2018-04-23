@@ -104,7 +104,29 @@ void GameObject::SetParent(GameObject* parent)
 void GameObject::AddChild(GameObject* child)
 {
 	m_children.push_back(child);
-	//child->m_Parent = this;
+	child->m_Parent = this;
+}
+
+void GameObject::OnCollision(GameObject* other)
+{
+
+}
+
+GameObject * GameObject::GetChildByName(std::string name)
+{
+	for (std::vector<GameObject*>::iterator i = m_children.begin(); i != m_children.end(); i++)
+	{
+		if ((*i)->GetName() == name)
+		{
+			return (*i);
+		}
+		else
+		{
+			continue;
+		}
+	}
+	std::cout << "no child with " << name << " was found" << std::endl;
+	return nullptr;
 }
 
 bool GameObject::HasParent()
@@ -124,7 +146,7 @@ void GameObject::AddComponent(BaseComponent* component) {
 
 	m_components.push_back(component);
 	component->m_owner = this;
-	std::cout << component->m_owner->GetName() << std::endl;
+	//std::cout << component->m_owner->GetName() << std::endl;
 }
 
 /*BaseComponent* GameObject::GetComponent(std::string type)
@@ -157,6 +179,7 @@ void GameObject::Update(float msec)
 		//printf("Parent x: %f, y: %f", m_Parent->GetWorldTransform)
 		//m_worldTransform.SetMatrix((m_Parent->GetWorldTransform()->GetMatrix()) * (m_transform.GetMatrix()));
 		m_worldTransform = m_transform * m_Parent->m_worldTransform;
+		std::cout << this->m_name<<" "<<this->m_Parent->GetName() << std::endl;
 		//m_transform = m_Parent->m_worldTransform;
 
 		//std::cout << "Child " << GetID() << ": " << m_transform.GetRotation() << " " << m_worldTransform.GetRotation() << std::endl;

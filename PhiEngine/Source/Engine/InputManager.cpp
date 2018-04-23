@@ -11,53 +11,68 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user)
 
 	sf::Event m_event;
 	while (_mainWindow->pollEvent(m_event)) {
-		std::cout << "POLL" << std::endl;
+		//std::cout << "POLL" << std::endl;
 		if (m_event.type == sf::Event::KeyPressed)
 		{
-			std::cout << "KEY PRESSED" << std::endl;
+			//std::cout << "KEY PRESSED" << std::endl;
 			if (m_event.key.code == sf::Keyboard::Right)
 			{
-				std::cout << "Right" << std::endl;
+				//std::cout << "Right" << std::endl;
 				 //phyComp = NULL;
 				PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
 				if (phyComp != nullptr) {
-					phyComp->currentVelocity = sf::Vector2f(0, 0);
-					phyComp->AddForc(sf::Vector2f(.1, 0));
+					//phyComp->currentVelocity = sf::Vector2f(0, 0);
+					//phyComp->AddForc(sf::Vector2f(.1, 0));
 				}
 			}
 			if (m_event.key.code == sf::Keyboard::Left)
 			{
-				std::cout << "Left" << std::endl;
+				//std::cout << "Left" << std::endl;
 				PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
 				if (phyComp != nullptr) {
-					phyComp->currentVelocity = sf::Vector2f(0, 0);
-					phyComp->AddForc(sf::Vector2f(-.1, 0));
+					//phyComp->currentVelocity = sf::Vector2f(0, 0);
+					//phyComp->AddForc(sf::Vector2f(-.1, 0));
 				}
 			}
 			if (m_event.key.code == sf::Keyboard::Up)
 			{
-				std::cout << "Up" << std::endl;
+				//std::cout << "Up" << std::endl;
 				PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
 				if (phyComp != nullptr) {
-					phyComp->currentVelocity = sf::Vector2f(0, 0);
-					phyComp->AddForc(sf::Vector2f(0, -.1));
+					//phyComp->currentVelocity = sf::Vector2f(0, 0);
+					//phyComp->AddForc(sf::Vector2f(0, -.1));
 				}
 			}
-			if (m_event.key.code == sf::Keyboard::Down)
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				std::cout << "Down" << std::endl;
+				//std::cout << "Down" << std::endl;
 				PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
 				if (phyComp != nullptr) {
 					phyComp->currentVelocity = sf::Vector2f(0, 0);
-					phyComp->AddForc(sf::Vector2f(0, .1));
-				}
+					phyComp->AddForc(sf::Vector2f(0, -5));
 
+				}
+				std::cout << "woot" << std::endl;
+
+			}
+			
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			{
+				PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
+				phyComp->Stop();
 			}
 			if (m_event.key.code == sf::Keyboard::P)
 			{
 				system("pause");
+				
+			}
+			if (m_event.key.code == sf::Keyboard::Escape)
+			{
+				
+				_mainWindow->close();
+				exit(EXIT_SUCCESS);
 			}
 		}
-		std::cout << "exit" << std::endl;
+		//std::cout << "exit" << std::endl;
 	}
 }
