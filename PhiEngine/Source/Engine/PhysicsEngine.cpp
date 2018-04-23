@@ -148,6 +148,7 @@ void PhysicsEngine::CheckCollisions()
 
 					if (gap.x > gap.y)
 					{
+						//printf("Collided horz\n");
 						if (distance.x > 0)
 						{
 							//system("pause");
@@ -164,6 +165,7 @@ void PhysicsEngine::CheckCollisions()
 					}
 					else
 					{
+						//printf("Colided vert\n");
 						//std::cout << "shitfuckkers" << std::endl;
 						//stem("pause");
 						if (distance.y > 0)
@@ -224,38 +226,38 @@ void PhysicsEngine::ResolveCollisions()
 		if (it->first.rigidBodyA->mass == 0)
 		{
 			invMassA = 0;
-			printf("hello2");
+			//printf("hello2");
 		}
 		else
 		{
 			std::cout << it->first.rigidBodyA->m_owner->GetName() << std::endl;
 			//it->first.rigidBodyA->mass = 10;
-			printf("mass A before=%f\n", it->first.rigidBodyA->mass);
+			//printf("mass A before=%f\n", it->first.rigidBodyA->mass);
 			//it->first.rigidBodyA->mass = 10;
 			invMassA = 1 / it->first.rigidBodyA->mass;
-			printf("invMassA=%f\n", invMassA);
+			//printf("invMassA=%f\n", invMassA);
 		}
 		if (it->first.rigidBodyB->mass == 0)
 		{
-			printf("hello");
+			//printf("hello");
 			invMassB = 0;
 		}
 		else
 		{
 			//it->first.rigidBodyB->mass = 10;
-			std::cout<<it->first.rigidBodyB->m_owner->GetName()<<std::endl;
-			printf("mass B before=%f\n", it->first.rigidBodyB->mass);
+			//std::cout<<it->first.rigidBodyB->m_owner->GetName()<<std::endl;
+			//printf("mass B before=%f\n", it->first.rigidBodyB->mass);
 			invMassB = 1 / it->first.rigidBodyB->mass;
-			printf("invMassB=%f\n", invMassB);
+			//printf("invMassB=%f\n", invMassB);
 		}
 
 		j /= invMassA + invMassB;
-		printf("j=%f\n", j);
+		//printf("j=%f\n", j);
 		sf::Vector2f impluse = j * it->second.collisionNormal;
-		printf("before impulse added\n CurrentV A %f, %f\n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
+		//printf("before impulse added\n CurrentV A %f, %f\n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
 		it->first.rigidBodyA->currentVelocity -= invMassA * impluse;
 		it->first.rigidBodyB->currentVelocity += invMassB * impluse;
-		printf("After impulse added\n CurrentV A %f, %f \n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
+		//printf("After impulse added\n CurrentV A %f, %f \n CurentV B %f,%f \n", it->first.rigidBodyA->currentVelocity.x, it->first.rigidBodyA->currentVelocity.y, it->first.rigidBodyB->currentVelocity.x, it->first.rigidBodyB->currentVelocity.y);
 
 		if (std::abs(it->second.penetration) > 0.01f)
 		{

@@ -33,6 +33,8 @@ public:
 
 	void SetParent(GameObject* parent);
 	void AddChild(GameObject* child);
+	virtual void OnCollision(GameObject* other);
+	GameObject* GetChildByName(std::string name);
 
 	bool HasParent();
 

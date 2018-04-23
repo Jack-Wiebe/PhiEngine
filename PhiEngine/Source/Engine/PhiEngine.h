@@ -31,12 +31,19 @@ private:
 		SplashScreen,
 		Paused,
 		Menu,
+		GameOver,
+		Win,
 		LoadAssets,
 		Playing,
 		Exiting
 	};
-
+	enum Levels {
+		Level1,
+		Level2,
+	};
+	
 	static GameState _gameState;
+	static Levels  _level;
 	static sf::RenderWindow _mainWindow;
 	static PhiEngineAudio _audioManager;
 	static GameObjectManager* _gameObjectManager;

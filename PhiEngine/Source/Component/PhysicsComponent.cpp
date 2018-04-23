@@ -45,7 +45,7 @@ void PhysicsComponent::Stop()
 {
 	sf::Vector2f zero(0, 0);
 	currentVelocity = zero;
-	totalForces = zero;
+	totalForces = sf::Vector2f(0, 0);;
 }
 
 void PhysicsComponent::Update()
