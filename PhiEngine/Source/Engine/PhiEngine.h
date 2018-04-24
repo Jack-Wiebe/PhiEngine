@@ -51,6 +51,7 @@ private:
 	static InputManager* _inputManager;
 	static sf::Clock _gameTime;
 	static GameObject* _mainUser;
+	static GameObject* _mainUser2;
 
 	static sf::Font _font;
 	static sf::Text _frameCount;

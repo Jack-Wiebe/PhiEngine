@@ -12,6 +12,6 @@ public:
 
 	sf::RenderWindow* m_window;
 
-	void Update(sf::RenderWindow* mainWindow, GameObject* _user);
+	void Update(sf::RenderWindow* _mainWindow, GameObject* _user, GameObject* _user2, sf::Clock* clock);
 
 };
