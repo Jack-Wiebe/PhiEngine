@@ -1,10 +1,13 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Player.h"
+
+
 #include <vector>
 #include <map>
 #include <iterator>
 
+class GameObject;
 
 class GameObjectManager
 {
@@ -14,6 +17,7 @@ public:
 
 	GameObject* Instantiate();
 	GameObject* Instantiate(std::string name);
+	Player* Instantiate(std::string name, signed int health);
 
 	bool SendMessage(BaseMessage* msg);
 

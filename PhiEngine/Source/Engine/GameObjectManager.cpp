@@ -24,6 +24,15 @@ GameObject* GameObjectManager::Instantiate(std::string name) {
 	return object;
 
 }
+Player* GameObjectManager::Instantiate(std::string name,signed int health)
+{
+	Player* player = new Player(newID,name, health);
+	m_sceneGraph[newID] = player;
+	newID++;
+	return player;
+					
+}
+
 
 GameObject* GameObjectManager::FindObjectByName(std::string name) {
 

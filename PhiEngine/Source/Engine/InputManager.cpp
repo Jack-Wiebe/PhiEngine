@@ -1,10 +1,12 @@
 #include "InputManager.h"
-
+#include"Player.h"
+#include "GameObjectManager.h"
+#include "PhysicsEngine.h"
 InputManager::InputManager()
 {
 }
 
-void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user, GameObject* _user2, sf::Clock* clock)
+void InputManager::Update(sf::RenderWindow* _mainWindow, Player* _user, Player* _user2, sf::Clock* clock, GameObjectManager* gm,PhysicsEngine* PE)
 {
 
 	//std::cout << "Update" << std::endl;
@@ -85,8 +87,9 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user, Game
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-
+				Vector2f userPos = _user->GetTransform()->GetPosition();
 				
+				_user->fire(gm, PE,userPos, Vector2f(0, 500), 0,Vector2f(0,100));
 				phyComp->Stop();
 
 			}
@@ -113,37 +116,33 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user, Game
 			if (m_event.key.code == sf::Keyboard::Right)
 			{
 				//std::cout << "Right" << std::endl;
-				//phyComp = NULL;
-				//	PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
+				
 				if (phyComp2!= nullptr) {
 					//phyComp->currentVelocity = sf::Vector2f(0, 0);
 					phyComp2->AddForc(sf::Vector2f(1000, 0));
 				}
-				//_user->GetTransform()->SetRotation(_user->GetTransform()->GetRotation() + 10 * clock->getElapsedTime().asSeconds());
-				//_user->GetTransform()->SetPosition(_user->GetTransform()->GetPosition() + sf::Vector2f(5,0));
+				
 
 			}
 			if (m_event.key.code == sf::Keyboard::Left)
 			{
 				//std::cout << "Left" << std::endl;
-				//	PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
+				
 				if (phyComp2 != nullptr) {
 					//phyComp->currentVelocity = sf::Vector2f(0, 0);
 					phyComp2->AddForc(sf::Vector2f(-1000, 0));
 				}
-				//_user->GetTransform()->SetRotation(_user->GetTransform()->GetRotation() + -10 * clock->getElapsedTime().asSeconds());
-				//_user->GetTransform()->SetPosition(_user->GetTransform()->GetPosition() + sf::Vector2f(-5, 0));
-
+				
 			}
 			if (m_event.key.code == sf::Keyboard::Up)
 			{
 				std::cout << "Up" << std::endl;
-				//PhysicsComponent* phyComp = _user->GetComponent<PhysicsComponent>();
+				
 				if (phyComp2 != nullptr) {
 
 					phyComp2->AddForc(sf::Vector2f(0, -1000));
 				}
-				//_user->GetTransform()->SetPosition(_user->GetTransform()->GetPosition() + sf::Vector2f(0, -5));
+				
 
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -153,16 +152,19 @@ void InputManager::Update(sf::RenderWindow* _mainWindow, GameObject* _user, Game
 
 					phyComp2->AddForc(sf::Vector2f(0, 1000));
 				}
-				//_user->GetTransform()->SetPosition(_user->GetTransform()->GetPosition() + sf::Vector2f(0, 5 )*clock->getElapsedTime().asSeconds());
-
+	
 
 			}
-			//phyComp->currentVelocity = sf::Vector2f(0, 0);
+			
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))
 			{
 
+				Vector2f userPos = _user2->GetTransform()->GetPosition();
 
+				_user2->fire(gm, PE, userPos, Vector2f(0, -500), 180, Vector2f(0, -100));
+				phyComp->Stop();
+				
 				phyComp2->Stop();
 
 			}

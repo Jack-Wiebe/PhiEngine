@@ -12,8 +12,9 @@ sf::Clock PhiEngine::_gameTime;
 sf::Text PhiEngine::_frameCount;
 sf::Font PhiEngine::_font;
 float PhiEngine::_timeLastFrame = 0.0f;
-GameObject* PhiEngine::_mainUser;
-GameObject* PhiEngine::_mainUser2;
+Player* PhiEngine::_mainUser;
+Player* PhiEngine::_mainUser2;
+
 
 
 sf::Texture PhiEngine::TEST_TEX;
@@ -298,9 +299,9 @@ void PhiEngine::GameLoop()
 		_physicsEngine = new PhysicsEngine(&_gameTime);
 		_inputManager = new InputManager();
 		
-
-		GameObject * player = _gameObjectManager->Instantiate("player");
-		GameObject * player2 = _gameObjectManager->Instantiate("player2");
+		
+		Player * player = _gameObjectManager->Instantiate("player", 40);
+		Player * player2 = _gameObjectManager->Instantiate("player2",40);
 		
 		player->SetTexture("PhiPhi.png");
 		player->SetSprite();
@@ -372,7 +373,6 @@ void PhiEngine::GameLoop()
 			sf::Event m_event;
 			int playerScore=0;
 			int PlayerLives=10;
-			
 			//_level = Level1;
 			switch (_level)
 			{
@@ -384,7 +384,7 @@ void PhiEngine::GameLoop()
 				//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 				//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 #pragma endregion
-				_inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime);
+				_inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime,_gameObjectManager, _physicsEngine);
 
 
 				_physicsEngine->Update();
@@ -409,7 +409,7 @@ void PhiEngine::GameLoop()
 				//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 				//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 #pragma endregion
-				_inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime);
+				// _inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime,_gameObjectManager);
 
 
 				_physicsEngine->Update();
