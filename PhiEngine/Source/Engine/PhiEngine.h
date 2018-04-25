@@ -2,6 +2,7 @@
 
 
 #include "windows.h"
+
 #include <SFML\Graphics.hpp>
 #include <SFML\Graphics\Text.hpp>
 #include "SplashScreen.h"
@@ -50,7 +51,8 @@ private:
 	static PhysicsEngine* _physicsEngine;
 	static InputManager* _inputManager;
 	static sf::Clock _gameTime;
-	static GameObject* _mainUser;
+	static Player* _mainUser;
+	static Player* _mainUser2;
 
 	static sf::Font _font;
 	static sf::Text _frameCount;

@@ -1,10 +1,12 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Player.h"
 #include "..\Component\PhysicsComponent.h"
 #include <SFML\Graphics.hpp>
 
-
+class Player;
+class GameObjectManager;
+class PhysicsEngine;
 class InputManager
 {
 public:
@@ -12,6 +14,6 @@ public:
 
 	sf::RenderWindow* m_window;
 
-	void Update(sf::RenderWindow* mainWindow, GameObject* _user);
+	void Update(sf::RenderWindow* _mainWindow, Player* _user, Player* _user2, sf::Clock* clock,GameObjectManager* gm,PhysicsEngine* PE);
 
 };

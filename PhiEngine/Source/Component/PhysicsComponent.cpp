@@ -58,6 +58,7 @@ void PhysicsComponent::LateUpdate()
 
 void PhysicsComponent::AddForc(sf::Vector2f forces)
 {
+	totalForces = sf::Vector2f(0,0);
 	totalForces += forces;
 }
 
@@ -73,6 +74,8 @@ void PhysicsComponent::SetAABB()
 	if (p_sprite!=nullptr)
 	{
 		bounds = p_sprite->getGlobalBounds();
+		bounds.height /= 1.5;
+		bounds.width /= 1.5;
 
 		//std::cout << this->m_owner->GetName() << " has sprite" << std::endl;
 	}
@@ -108,7 +111,7 @@ void PhysicsComponent::Integrate(float dt)
 		acceleration = zero;
 	}
 
-	currentVelocity += acceleration*dt;
+	currentVelocity += acceleration;
 
 	sf::Vector2f temp = this->m_owner->GetTransform()->GetPosition();
 		//transform.GetPosition();

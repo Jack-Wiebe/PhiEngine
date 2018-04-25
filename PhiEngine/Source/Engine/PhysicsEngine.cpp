@@ -295,5 +295,7 @@ void PhysicsEngine::UpdatePhysics()
 	//std::cout << g_Clock->getElapsedTime().asSeconds() << std::endl;
 	CheckCollisions();
 	ResolveCollisions();
-	Integrate(g_Clock->getElapsedTime().asSeconds());
+	sf::Time mtime = g_Clock->restart();
+	Integrate(mtime.asSeconds());
+
 }

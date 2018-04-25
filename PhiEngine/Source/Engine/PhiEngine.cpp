@@ -12,11 +12,15 @@ sf::Clock PhiEngine::_gameTime;
 sf::Text PhiEngine::_frameCount;
 sf::Font PhiEngine::_font;
 float PhiEngine::_timeLastFrame = 0.0f;
-GameObject* PhiEngine::_mainUser;
+Player* PhiEngine::_mainUser;
+Player* PhiEngine::_mainUser2;
+
 
 
 sf::Texture PhiEngine::TEST_TEX;
 sf::Sprite PhiEngine::TEST_SPRITE;
+
+#pragma region engineChecks
 
 bool PhiEngine::IsOnlyInstance(LPCTSTR gameTitle)
 {
@@ -208,7 +212,7 @@ bool PhiEngine::Initialize()
 
 	return true;
 }
-
+#pragma endregion
 void PhiEngine::Start()
 {
 
@@ -295,29 +299,27 @@ void PhiEngine::GameLoop()
 		_physicsEngine = new PhysicsEngine(&_gameTime);
 		_inputManager = new InputManager();
 		
-
-		GameObject * player = _gameObjectManager->Instantiate("player");
-		GameObject * EnimySpawner1 = _gameObjectManager->Instantiate("EnimySPawner1");
-		GameObject * EnimySpawne2 = _gameObjectManager->Instantiate("EnimySPawner2");
+		
+		Player * player = _gameObjectManager->Instantiate("player", 40);
+		Player * player2 = _gameObjectManager->Instantiate("player2",40);
+		
 		player->SetTexture("PhiPhi.png");
 		player->SetSprite();
 		player->SetTransform(TransformComponent((_mainWindow.getSize().x / 2.0f), (_mainWindow.getSize().y / 2.0f)-150));
 		player->SetScale(sf::Vector2f(.5f, .5f));
 		player->AddComponent(new PhysicsComponent(_physicsEngine,sf::Vector2f(0,-9.8),false,100.f));
-		
 		player->GetComponent<PhysicsComponent>()->Awake();
 
 
-		
-		
-
-		
-	
-		
-		
-		
+		player2->SetTexture("Squirl.png");
+		player2->SetSprite();
+		player2->SetTransform(TransformComponent((_mainWindow.getSize().x / 1.5f), (_mainWindow.getSize().y / 2.0f) - 150));
+		player2->SetScale(sf::Vector2f(.5f, .5f));
+		player2->AddComponent(new PhysicsComponent(_physicsEngine, sf::Vector2f(0, -9.8), false, 100.f));
+		player2->GetComponent<PhysicsComponent>()->Awake();
 
 		_mainUser = player;
+		_mainUser2 = player2;
 		_gameState = Playing;
 		_level = Level1;
 		/*player->Update();
@@ -367,10 +369,10 @@ void PhiEngine::GameLoop()
 		
 		case Playing:
 		{
+			sf::Clock gameFrame;
 			sf::Event m_event;
 			int playerScore=0;
 			int PlayerLives=10;
-			
 			//_level = Level1;
 			switch (_level)
 			{
@@ -382,7 +384,7 @@ void PhiEngine::GameLoop()
 				//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 				//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 #pragma endregion
-				_inputManager->Update(&_mainWindow, _mainUser);
+				_inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime,_gameObjectManager, _physicsEngine);
 
 
 				_physicsEngine->Update();
@@ -396,6 +398,8 @@ void PhiEngine::GameLoop()
 					_level = Level2;
 				}
 				_mainWindow.display();
+				gameFrame.restart();
+
 				break;
 			case Level2:
 				_mainWindow.clear(sf::Color::Blue);
@@ -405,7 +409,7 @@ void PhiEngine::GameLoop()
 				//_gameObjectManager->FindObjectByName("player")->GetTransform()->SetRotation(++lastRot);
 				//	std::cout << _gameObjectManager->FindObjectByName("player")->GetTransform()->GetRotation() << std::endl;
 #pragma endregion
-				_inputManager->Update(&_mainWindow, _mainUser);
+				// _inputManager->Update(&_mainWindow, _mainUser,_mainUser2,&_gameTime,_gameObjectManager);
 
 
 				_physicsEngine->Update();
